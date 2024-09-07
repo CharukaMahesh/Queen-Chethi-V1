@@ -68,7 +68,7 @@ async (conn, mek, m, {
 
 //--------𝗩𝗜𝗗𝗘𝗢 𝗗𝗢𝗪𝗡𝗟𝗢𝗔𝗗🎥---------//
 cmd({
-    pattern: "video",
+    pattern: "ytmp4",
     desc: "Download videoes",
     category: "download",
     filename: __filename
@@ -135,6 +135,23 @@ async (conn, mek, m, {
         reply("An error occurred while processing your request. Please try again later.");
     }
 });
+
+        await conn.sendMessage(from, {
+            react: { text: "🎥", key: mek.key }
+        });
+
+        // Send Video File
+        await conn.sendMessage(from, {
+            video: { url: downloadVideoUrl },
+            mimetype: "video/mp4",
+            caption: `${data.title} - Video`
+        }, { quoted: mek });
+    } catch (e) {
+        console.error("Error:", e);
+        reply("An error occurred while processing your request. Please try again later.");
+    }
+});
+
 
 cmd({
     pattern: "ytmp3",

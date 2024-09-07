@@ -1,6 +1,6 @@
 const { cmd } = require('../command');
 const { downloadContentFromMessage } = require('@adiwajshing/baileys');
-const sharp = require('sharp');
+const { Sticker, createSticker, StickerTypes } = require('sticker-maker-wa');
 const fs = require('fs');
 const path = require('path');
 
@@ -35,20 +35,20 @@ async (conn, mek, m, {
             buffer = Buffer.concat([buffer, chunk]);
         }
 
-        // Convert the image to a sticker using sharp
-        const outputPath = path.join(__dirname, 'output.webp');
-        await sharp(buffer)
-            .resize(512, 512, { fit: 'contain' })
-            .webp({ quality: 80 })
-            .toFile(outputPath);
+        // Create sticker
+        const sticker = new Sticker(buffer, {
+            pack: 'Pack Name',  // Sticker Pack Name
+            author: 'Author Name',  // Sticker Author
+            type: StickerTypes.FULL,  // Sticker type
+            quality: 80  // Sticker quality
+        });
 
+        const stickerBuffer = await sticker.toBuffer();
+        
         // Send the sticker
         await conn.sendMessage(from, {
-            sticker: fs.readFileSync(outputPath)
+            sticker: stickerBuffer
         }, { quoted: mek });
-
-        // Clean up: delete the output file
-        fs.unlinkSync(outputPath);
 
     } catch (e) {
         console.error("Error:", e);

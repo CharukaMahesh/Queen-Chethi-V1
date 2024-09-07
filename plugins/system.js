@@ -1,9 +1,11 @@
 const config = require('../config')
 const {cmd , commands} = require('../command')
 const os = require("os")
+const {} = require('../lib/functions')
 
 cmd({
     pattern: "system",
+    alias: ["status","botinfo"],
     desc: "Check bot runtime",
     category: "main",
     filename: __filename
@@ -16,7 +18,7 @@ try{
 *HostName🌏:* ${os.hostname()}
 *Owner🛡️:* Charuka Mahesh & Chethana Rajaguru
 `
-  
+return reply(`${status}`)
 }catch(e){
 console.log(e)
 reply(`${e}`)

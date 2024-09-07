@@ -69,7 +69,7 @@ async (conn, mek, m, {
 
 
 cmd({
-    pattern: "song",
+    pattern: "video",
     desc: "Download songs",
     category: "download",
     filename: __filename

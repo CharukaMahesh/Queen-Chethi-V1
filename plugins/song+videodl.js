@@ -2,6 +2,10 @@ const { cmd } = require('../command');
 const fg = require('api-dylux');
 const yts = require('yt-search');
 
+_____________
+
+//🎧--------AUDIO-DOWNLOAD-------🎧//
+
 cmd({
     pattern: "song",
     desc: "Download songs",
@@ -28,7 +32,7 @@ async (conn, mek, m, {
         const url = data.url;
 
         let desc = `
-🧬𝐐𝐔𝐄𝐄𝐍 𝐂𝐇𝐄𝐓𝐇𝐈 𝐘𝐓 𝗠𝗨𝗦𝗜𝗖 𝐃𝐎𝐖𝐍𝐋𝐎𝐀𝐃𝐄𝐑🧬
+🎧𝗤𝗨𝗘𝗘𝗡 𝗖𝗛𝗘𝗧𝗛𝗜 𝗬𝗧 𝗠𝗨𝗦𝗜𝗖 𝗗𝗢𝗪𝗡𝗟𝗢𝗔𝗗𝗘𝗥🎧
 
 *TITLE* 🔍: ${data.title}
 
@@ -68,9 +72,15 @@ async (conn, mek, m, {
 
 
 
+//🎧--------VIDEO-DOWNLOAD-------//
+
+
+
+
+
 cmd({
     pattern: "video",
-    desc: "Download songs",
+    desc: "Download videoes",
     category: "download",
     filename: __filename
 },
@@ -80,9 +90,9 @@ async (conn, mek, m, {
     try {
         if (!q) return reply("Please provide a valid URL or song name... 🙋‍♂️");
 
-        // React with 🎧 when the command is triggered
+        // React with 🎥 when the command is triggered
         await conn.sendMessage(from, {
-            react: { text: "🎧", key: mek.key }
+            react: { text: "🎥", key: mek.key }
         });
 
         const search = await yts(q);
@@ -94,7 +104,7 @@ async (conn, mek, m, {
         const url = data.url;
 
         let desc = `
-🧬𝐐𝐔𝐄𝐄𝐍 𝐂𝐇𝐄𝐓𝐇𝐈 𝐘𝐓 𝗠𝗨𝗦𝗜𝗖 𝐃𝐎𝐖𝐍𝐋𝐎𝐀𝐃𝐄𝐑🧬
+🎥𝗤𝗨𝗘𝗘𝗡 𝗖𝗛𝗘𝗧𝗛𝗜 𝗬𝗧 𝗩𝗜𝗗𝗘𝗢 𝗗𝗢𝗪𝗡𝗟𝗢𝗔𝗗𝗘𝗥🎥
 
 *TITLE* 🔍: ${data.title}
 
@@ -119,11 +129,6 @@ async (conn, mek, m, {
             return reply("Failed to download video. Please try again later.");
         }
         let downloadVideoUrl = downVideo.dl_url;
-
-        // React with 🎥 before sending the video
-        await conn.sendMessage(from, {
-            react: { text: "🎥", key: mek.key }
-        });
 
         // Send Video File
         await conn.sendMessage(from, {

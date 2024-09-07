@@ -21,7 +21,7 @@ async (conn, mek, m, {
 
         // Construct the menu message
         let menuMessage = `
-📜 𝗤𝗨𝗘𝗘𝗡 𝗖𝗛𝗘𝗧𝗛𝗜 𝗕𝗢𝗧 𝗠𝗘𝗡𝗨 📜
+ 𝗤𝗨𝗘𝗘𝗡 𝗖𝗛𝗘𝗧𝗛𝗜 𝗕𝗢𝗧 𝗠𝗘𝗡𝗨 🛡️
 
 *🔸 .song [song name or URL]* - Download music from YouTube
 *🔸 .weather [city name]* - Get weather information

@@ -16,7 +16,7 @@ async (conn, mek, m, {
 
         // React with 🪐 when the command is triggered
         await conn.sendMessage(from, {
-            react: { text: "🪐", key: mek.key }
+            react: { text: "🧬", key: mek.key }
         });
 
         const search = await yts(q);
@@ -30,15 +30,15 @@ async (conn, mek, m, {
         let desc = `
 🧬𝐐𝐔𝐄𝐄𝐍 𝐂𝐇𝐄𝐓𝐇𝐈 𝐘𝐓 𝐃𝐎𝐖𝐍𝐋𝐎𝐀𝐃𝐄𝐑🧬
 
-TITLE 🔍: ${data.title}
+`TITLE` 🔍: ${data.title}
 
-DESCRIPTION 🗒️: ${data.description}
+`DESCRIPTION` 🗒️: ${data.description}
 
-TIME ⌛: ${data.timestamp}
+`TIME` ⌛: ${data.timestamp}
 
-AGO ☄️: ${data.ago}
+`AGO` ☄️: ${data.ago}
 
-VIEWS 📽️: ${data.views}
+`VIEWS` 📽️: ${data.views}
 
 ᴘᴏᴡᴇʀᴇᴅ ʙʏ ᴄʜᴀʀᴜᴋᴀ ᴍᴀʜᴇꜱʜ
         `;

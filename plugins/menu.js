@@ -19,13 +19,9 @@ async (conn, mek, m, {
             react: { text: "📜", key: mek.key }
         });
 
-        const currentTime = moment().format('YYYY-MM-DD HH:mm:ss');
-
         // Construct the menu message
         let menuMessage = `
  --- 👸𝐐𝐔𝐄𝐄𝐍 𝐂𝐇𝐄𝐓𝐇𝐈 𝐌𝐃👸 ---
-
-   *Time Now ⏰:* ${currentTime}
 _____________________________________
 
     *°|----🌏 𝙳𝙾𝚆𝙽𝙻𝙾𝙰𝙳 𝙼𝙴𝙽𝚄 🌏----|°*

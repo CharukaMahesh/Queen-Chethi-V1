@@ -19,7 +19,7 @@ const axios = require('axios')
 const { File } = require('megajs')
 const prefix = '.'
 
-const ownerNumber = ['94779415698']
+const ownerNumber = ['94789748241']
 
 //===================SESSION-AUTH============================
 if (!fs.existsSync(__dirname + '/auth_info_baileys/creds.json')) {
@@ -39,7 +39,7 @@ const port = process.env.PORT || 8000;
 //=============================================
 
 async function connectToWA() {
-console.log("Connecting wa bot 🧬...");
+console.log("Connecting Queen Chethi Md...🧬");
 const { state, saveCreds } = await useMultiFileAuthState(__dirname + '/auth_info_baileys/')
 var { version } = await fetchLatestBaileysVersion()
 
@@ -59,7 +59,7 @@ if (lastDisconnect.error.output.statusCode !== DisconnectReason.loggedOut) {
 connectToWA()
 }
 } else if (connection === 'open') {
-console.log('😼 Installing... ')
+console.log('Installing...🧬 ')
 const path = require('path');
 fs.readdirSync("./plugins/").forEach((plugin) => {
 if (path.extname(plugin).toLowerCase() == ".js") {
@@ -69,7 +69,7 @@ require("./plugins/" + plugin);
 console.log('Plugins installed successful ✅')
 console.log('Bot connected to whatsapp ✅')
 
-let up = `Wa-BOT connected successful ✅\n\nPREFIX: ${prefix}`;
+let up = `Queen Chethi Md connected successful ✅\n\nPREFIX: ${prefix}`;
 
 conn.sendMessage(ownerNumber + "@s.whatsapp.net", { image: { url: `https://telegra.ph/file/900435c6d3157c98c3c88.jpg` }, caption: up })
 

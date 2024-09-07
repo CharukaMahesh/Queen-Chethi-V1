@@ -23,7 +23,7 @@ async (conn, mek, m, {
         });
 
         // Fetch weather data using an API (e.g., OpenWeatherMap)
-        const apiKey = "YOUR_OPENWEATHERMAP_API_KEY"; // Replace with your API key
+        const apiKey = "06969e817454ef76756c9d0817431e4b"; // Replace with your API key
         const weatherUrl = `https://api.openweathermap.org/data/2.5/weather?q=${q}&appid=${apiKey}&units=metric`;
 
         const response = await axios.get(weatherUrl);

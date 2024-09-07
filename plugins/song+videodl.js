@@ -14,9 +14,9 @@ async (conn, mek, m, {
     try {
         if (!q) return reply("Please provide a valid URL or song name... 🙋‍♂️");
 
-        // React with 🪐 when the command is triggered
+        // React with 🎧 when the command is triggered
         await conn.sendMessage(from, {
-            react: { text: "🧬", key: mek.key }
+            react: { text: "🎧", key: mek.key }
         });
 
         const search = await yts(q);
@@ -28,7 +28,7 @@ async (conn, mek, m, {
         const url = data.url;
 
         let desc = `
-🧬𝐐𝐔𝐄𝐄𝐍 𝐂𝐇𝐄𝐓𝐇𝐈 𝐘𝐓 𝐃𝐎𝐖𝐍𝐋𝐎𝐀𝐃𝐄𝐑🧬
+🧬𝐐𝐔𝐄𝐄𝐍 𝐂𝐇𝐄𝐓𝐇𝐈 𝐘𝐓 𝗠𝗨𝗦𝗜𝗖 𝐃𝐎𝐖𝐍𝐋𝐎𝐀𝐃𝐄𝐑🧬
 
 *TITLE* 🔍: ${data.title}
 
@@ -60,7 +60,58 @@ async (conn, mek, m, {
             audio: { url: downloadAudioUrl },
             mimetype: "audio/mpeg"
         }, { quoted: mek });
+    } catch (e) {
+        console.error("Error:", e);
+        reply("An error occurred while processing your request. Please try again later.");
+    }
+});
 
+//--------𝗩𝗜𝗗𝗘𝗢 𝗗𝗢𝗪𝗡𝗟𝗢𝗔𝗗🎥---------//
+cmd({
+    pattern: "video",
+    desc: "Download videoes",
+    category: "download",
+    filename: __filename
+},
+async (conn, mek, m, {
+    from, quoted, q, reply
+}) => {
+    try {
+        if (!q) return reply("Please provide a valid URL or song name... 🙋‍♂️");
+
+        // React with 🎥 when the command is triggered
+        await conn.sendMessage(from, {
+            react: { text: "🎥", key: mek.key }
+        });
+
+        const search = await yts(q);
+        if (!search || !search.videos || !search.videos.length) {
+            return reply("No results found for the given query.");
+        }
+
+        const data = search.videos[0];
+        const url = data.url;
+
+        let desc = `
+🧬𝐐𝐔𝐄𝐄𝐍 𝐂𝐇𝐄𝐓𝐇𝐈 𝐘𝐓 𝗩𝗜𝗗𝗘𝗢 𝐃𝐎𝐖𝐍𝐋𝐎𝐀𝐃𝐄𝐑🧬
+
+*TITLE* 🔍: ${data.title}
+
+*DESCRIPTION* 🗒️: ${data.description}
+
+*TIME* ⌛: ${data.timestamp}
+
+*AGO* ☄️: ${data.ago}
+
+*VIEWS* 📽️: ${data.views}
+
+*ᴘᴏᴡᴇʀᴇᴅ ʙʏ ᴄʜᴀʀᴜᴋᴀ ᴍᴀʜᴇꜱʜ*
+        `;
+
+        await conn.sendMessage(from, {
+            image: { url: data.thumbnail },
+            caption: desc
+        }, { quoted: mek });
         // Download Video
         let downVideo = await fg.ytv(url);
         if (!downVideo || !downVideo.dl_url) {
@@ -68,9 +119,9 @@ async (conn, mek, m, {
         }
         let downloadVideoUrl = downVideo.dl_url;
 
-        // React with 🧬 before sending the video
+        // React with 🎥 before sending the video
         await conn.sendMessage(from, {
-            react: { text: "🧬", key: mek.key }
+            react: { text: "🎥", key: mek.key }
         });
 
         // Send Video File
@@ -79,7 +130,6 @@ async (conn, mek, m, {
             mimetype: "video/mp4",
             caption: `${data.title} - Video`
         }, { quoted: mek });
-
     } catch (e) {
         console.error("Error:", e);
         reply("An error occurred while processing your request. Please try again later.");

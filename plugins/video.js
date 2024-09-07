@@ -76,7 +76,7 @@ async (conn, mek, m, {
 
 
 cmd({
-    pattern: "ytvideo",
+    pattern: "ytmp4",
     desc: "Download videoes",
     category: "download",
     filename: __filename

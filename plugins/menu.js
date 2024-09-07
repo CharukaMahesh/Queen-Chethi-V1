@@ -21,21 +21,32 @@ async (conn, mek, m, {
 
         // Construct the menu message
         let menuMessage = `
- 𝗤𝗨𝗘𝗘𝗡 𝗖𝗛𝗘𝗧𝗛𝗜 𝗕𝗢𝗧 𝗠𝗘𝗡𝗨 🛡️
+ --- 👸𝐐𝐔𝐄𝐄𝐍 𝐂𝐇𝐄𝐓𝐇𝐈 𝐌𝐃👸 ---
 
-*🔸 .song [song name or URL]* - Download music from YouTube
-*🔸 .weather [city name]* - Get weather information
-*🔸 .quote* - Get a random quote
-*🔸 .news* - Get the latest news
-*🔸 .joke* - Get a random joke
+_____________________________________
 
-*🛠️ 𝗧𝗢𝗢𝗟𝗦*:
-*🔸 .sticker* - Convert image to sticker
-*🔸 .gifsticker* - Convert GIF to sticker
+    *°|----🌏 𝙳𝙾𝚆𝙽𝙻𝙾𝙰𝙳 𝙼𝙴𝙽𝚄 🌏----|°*
+_____________________________________
 
-*ℹ️ 𝗜𝗡𝗙𝗢𝗥𝗠𝗔𝗧𝗜𝗢𝗡*:
-*🔸 .about* - Learn about this bot
-*🔸 .help* - Get help on using this bot
+   🧭 .song[song name     or URL] - Download Music From Youtube..
+
+   🧭 .video[video name or URL] - Download Video From Youtube..
+
+   🧭 .ytmp3[song name or URL] - Download Music From Youtube..
+
+   🧭 .ytmp4[video name or URL] - Download Video From Youtube..
+
+_____________________________________
+         *°|----🌏 𝙰𝙸-𝙼𝙴𝙽𝚄 🌏----|°*
+_____________________________________
+
+ 🧭.ai - Ask Any Question From Chatgpt..
+
+_____________________________________
+         *°|----🌏 𝚂𝙴𝙰𝚁𝙲𝙷-𝙼𝙴𝙽𝚄 🌏----|°*
+_____________________________________
+
+🧭.weather[Country Or City] - To Know Current Weather Situation Of Any Country
 
 *ᴘᴏᴡᴇʀᴇᴅ ʙʏ ᴄʜᴀʀᴜᴋᴀ ᴍᴀʜᴇꜱʜ*
         `;

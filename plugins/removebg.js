@@ -69,7 +69,7 @@ async (conn, mek, m, {
 
 
 
-const fetch = require('node-fetch');
+/*const fetch = require('node-fetch');
 const { cmd } = require('../command');
 const fs = require('fs');
 const path = require('path');
@@ -145,4 +145,66 @@ async (conn, mek, m, {
         reply(`An error occurred: ${e.message}`);
     }
 });
+*/
+
+const { removeBackgroundFromImageFile } = require('removebg');
+const fs = require('fs');
+const { cmd } = require('../command');
+
+const apiKey = 'YkwhudDMCqwaBXEnyn4PiLLw'; // Replace with your remove.bg API key
+
+cmd({
+    pattern: "removebg",
+    desc: "Remove the background from an image",
+    category: "image-processing",
+    filename: __filename
+},
+async (conn, mek, m, {
+    from, quoted, reply
+}) => {
+    try {
+        // Check if the message is a photo or has a quoted message that is a photo
+        const media = m.message.imageMessage || (quoted ? quoted.message.imageMessage : null);
+
+        if (!media) {
+            return reply("Please reply to an image or send an image to remove the background.");
+        }
+
+        // Get the URL of the image
+        const imageUrl = media.url;
+
+        // Download the image
+        const imageResponse = await axios({
+            url: imageUrl,
+            method: 'GET',
+            responseType: 'arraybuffer'
+        });
+        const imageBuffer = Buffer.from(imageResponse.data, 'binary');
+
+        // Save the image temporarily
+        const inputPath = 'input.png';
+        fs.writeFileSync(inputPath, imageBuffer);
+
+        // Remove background
+        const result = await removeBackgroundFromImageFile({
+            path: inputPath,
+            apiKey: apiKey,
+            size: 'auto'
+        });
+
+        // Send the processed image back
+        await conn.sendMessage(from, {
+            image: result.data,
+            caption: 'Here is your image with the background removed.'
+        }, { quoted: mek });
+
+        // Clean up the saved file
+        fs.unlinkSync(inputPath);
+
+    } catch (e) {
+        console.error("Error:", e);
+        reply("An error occurred while processing your request. Please try again later.");
+    }
+});
+
 

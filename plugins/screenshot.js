@@ -1,7 +1,3 @@
-const { cmd } = require('../command');
-const puppeteer = require('puppeteer');
-const fs = require('fs');
-
 cmd({
     pattern: "ss",
     desc: "Take a screenshot of a given URL",
@@ -17,8 +13,9 @@ async (conn, mek, m, {
             react: { text: "📸", key: mek.key }
         });
 
-        if (!text) {
-            return reply('Please provide a URL to capture the screenshot.');
+        // Check if a valid URL is provided
+        if (!text || !text.match(/https?:\/\/[^\s$.?#].[^\s]*/)) {
+            return reply('Please provide a valid URL to capture the screenshot.');
         }
 
         // Launch Puppeteer browser

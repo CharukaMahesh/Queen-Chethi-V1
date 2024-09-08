@@ -19,7 +19,7 @@
     "file_size_url": "^1.0.4",
     "fs-extra": "^11.1.0",
     "path": "^0.12.7",
-    "node-fetch": "^3.3.2",
+    "node-fetch": "^2.7.0",
     "megajs": "^1.1.0",
     "vm": "^0.1.0",
     "qrcode-terminal": "^0.12.0",

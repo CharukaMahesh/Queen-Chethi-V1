@@ -36,6 +36,8 @@ async (conn, mek, m, {
 👁️ *Views:* ${topVideo.views}
 📅 *Uploaded:* ${topVideo.ago}
 🔗 *Link:* ${topVideo.url}
+
+*𝙿𝙾𝚆𝙴𝚁𝙴𝙳 𝙱𝚈 𝚀𝚄𝙴𝙴𝙽 𝙲𝙷𝙴𝚃𝙷𝙸 𝙼𝙳*
             `;
 
             // Send the top video details with the thumbnail

@@ -1,10 +1,9 @@
-const axios = require('axios');
 const { cmd } = require('../command');
-const TikTokScraper = require('tiktok-scraper');
+const TikTokScraper = require('tiktok-scraper-without-watermark');
 
 cmd({
     pattern: "tiktok",
-    desc: "Download TikTok videos",
+    desc: "Download TikTok videos without watermark",
     category: "media",
     filename: __filename
 },
@@ -12,6 +11,7 @@ async (conn, mek, m, {
     from, args, reply
 }) => {
     try {
+        // React with 🎵 when the command is triggered
         await conn.sendMessage(from, {
             react: { text: "🎵", key: mek.key }
         });
@@ -20,25 +20,22 @@ async (conn, mek, m, {
             return reply("Please provide a TikTok video URL.");
         }
 
-        let videoUrl = args[0];
-        console.log("Original Video URL:", videoUrl);
-
-        // Expand the shortened URL to its full version
-        const response = await axios.get(videoUrl, { maxRedirects: 5, timeout: 10000 });
-        videoUrl = response.request.res.responseUrl;
-        console.log("Expanded Video URL:", videoUrl);
+        const videoUrl = args[0];
+        console.log("Video URL:", videoUrl);
 
         // Fetch TikTok video details
-        const videoData = await TikTokScraper.getVideoMeta(videoUrl, { noWaterMark: true });
+        const videoData = await TikTokScraper.getVideoMeta(videoUrl);
         console.log("Video Data:", videoData);
 
-        if (!videoData || !videoData.collector || !videoData.collector[0].videoUrl) {
+        // Check if video data is valid
+        if (!videoData || !videoData.url) {
             return reply("Sorry, I couldn't retrieve the video. Please try again with a valid TikTok URL.");
         }
 
+        // Send the video to the user
         await conn.sendMessage(from, {
-            video: { url: videoData.collector[0].videoUrl },
-            caption: `🎥 *Video Title*: ${videoData.collector[0].text}\n📱 *From*: TikTok`
+            video: { url: videoData.url },
+            caption: `🎥 *Video Title*: ${videoData.title}\n📱 *From*: TikTok`
         }, { quoted: mek });
 
     } catch (e) {

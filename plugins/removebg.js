@@ -4,7 +4,7 @@ const fs = require('fs');
 const path = require('path');
 
 // Replace with your Remove.bg API key
-const REMOVE_BG_API_KEY = 'YOUR_REMOVE_BG_API_KEY';
+const REMOVE_BG_API_KEY = 'YkwhudDMCqwaBXEnyn4PiLLw';
 
 cmd({
     pattern: "removebg",

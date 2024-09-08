@@ -43,7 +43,7 @@ async (conn, mek, m, {
             await conn.sendMessage(from, {
                 text: responseMessage,
                 previewType: 'IMAGE',
-                mediaUrl: ${topVideo.thumbnail}
+                mediaUrl: topVideo.thumbnail
             }, { quoted: mek });
         } else {
             reply('No videos found for your query.');

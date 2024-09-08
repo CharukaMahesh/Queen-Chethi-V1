@@ -28,7 +28,7 @@ async (conn, mek, m, {
         let lyrics = await lyricsFinder(artist.join(' '), title);
 
         if (!lyrics) {
-            lyrics = "Sorry, lyrics not found....";
+            lyrics = "Sorry, lyrics not found.";
         }
 
         // Send the lyrics
@@ -38,4 +38,6 @@ async (conn, mek, m, {
 
     } catch (e) {
         console.error("Error:", e);
-       
+        reply(`An error occurred: ${e.message}`);
+    }
+});

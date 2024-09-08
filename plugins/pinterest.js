@@ -1,5 +1,9 @@
-const pinterest = require('pinterest-dl');
+const Pinterest = require('pinterest-api');
 const { cmd } = require('../command');
+
+const pinterest = new Pinterest({
+    accessToken: 'YOUR_ACCESS_TOKEN'  // Replace with your Pinterest API access token
+});
 
 cmd({
     pattern: "pinterest",
@@ -21,13 +25,18 @@ async (conn, mek, m, {
             react: { text: "📥", key: mek.key }
         });
 
-        // Download media from Pinterest
-        const media = await pinterest.getMedia(url);
+        // Extract the pin ID from the URL (assuming URL is in the format `https://www.pinterest.com/pin/{pin_id}/`)
+        const pinId = url.split('/').filter(Boolean).pop();
+        
+        // Fetch media details from Pinterest
+        const pinDetails = await pinterest.getPin(pinId);
 
-        if (media && media.length > 0) {
-            // Send the downloaded media to the user
+        if (pinDetails && pinDetails.media) {
+            const mediaUrl = pinDetails.media.url;
+
+            // Send the media to the user
             await conn.sendMessage(from, {
-                video: { url: media[0] }, // This works for both images and videos
+                video: { url: mediaUrl }, // This works for both images and videos
                 caption: 'Here is your downloaded media from Pinterest'
             }, { quoted: mek });
         } else {

@@ -27,6 +27,7 @@
     "api-dylux": "^1.8.5",
     "hirunews-scrap": "^1.1.2",
     "yt-search": "^2.12.1",
-    "songlyrics": "^2.4.8"
+    "songlyrics": "^2.4.8",
+    "pinterest-dl": "1.0.1"
   }
 }

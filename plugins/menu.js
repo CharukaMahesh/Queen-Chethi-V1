@@ -19,33 +19,62 @@ async(conn, mek, m,{from, quoted, body, isCmd, command, args, q, isGroup, sender
 
         // Construct the menu message
         let menuMessage = `
- --- 👸𝐐𝐔𝐄𝐄𝐍 𝐂𝐇𝐄𝐓𝐇𝐈 𝐌𝐃👸 ---
+--- 👸𝐐𝐔𝐄𝐄𝐍 𝐂𝐇𝐄𝐓𝐇𝐈 𝐌𝐃👸 ---
 
 👋𝐇𝐄𝐋𝐋𝐎 ${pushname}
+📡𝐂𝐎𝐌𝐌𝐀𝐍𝐃 ${command}
 _____________________________________
 
     *°|----🌏 𝙳𝙾𝚆𝙽𝙻𝙾𝙰𝙳 𝙼𝙴𝙽𝚄 🌏----|°*
 _____________________________________
 
-   🧭 .song[song name     or URL] - Download Music From Youtube..
+📡.song[song name     or URL] - Download Music From Youtube..
 
-   🧭 .video[video name or URL] - Download Video From Youtube..
+📡.video[video name or URL] - Download Video From Youtube..
 
-   🧭 .ytmp3[song name or URL] - Download Music From Youtube..
+📡.ytmp3[song name or URL] - Download Music From Youtube..
 
-   🧭 .ytmp4[video name or URL] - Download Video From Youtube..
+📡.ytmp4[video name or URL] - Download Video From Youtube..
 
 _____________________________________
          *°|----🌏 𝙰𝙸-𝙼𝙴𝙽𝚄 🌏----|°*
 _____________________________________
 
- 🧭.ai - Ask Any Question From Chatgpt..
+📡.ai - Ask Any Question From Chatgpt..
 
 _____________________________________
          *°|----🌏 𝚂𝙴𝙰𝚁𝙲𝙷-𝙼𝙴𝙽𝚄 🌏----|°*
 _____________________________________
 
-🧭.weather[Country Or City] - To Know Current Weather Situation Of Any Country
+📡.weather[Country Or City] - To Know Current Weather Situation Of Any Country
+
+📡.ytsearch - Search Accross Youtube..
+
+_____________________________________
+         *°|----🌏 𝙾𝚆𝙽𝙴𝚁-𝙼𝙴𝙽𝚄 🌏----|°*
+_____________________________________
+
+📡.restart - For Restart The Bot..
+
+_____________________________________
+         *°|----🌏 𝙶𝙴𝙽𝙴𝙰𝙻-𝙼𝙴𝙽𝚄 🌏----|°*
+_____________________________________
+
+📡.ping - Check Bot Respond Speed..
+
+📡.system - Check Bot Server Info
+
+_____________________________________
+         *°|----🌏 𝙽𝙴𝚆𝚂-𝙼𝙴𝙽𝚄 🌏----|°*
+_____________________________________
+
+📡.hirunews - Get News From Hiru News
+
+_____________________________________
+         *°|----🌏 𝙾𝚃𝙷𝙴𝚁🌏----|°*
+_____________________________________
+
+📡.tempmail - Get Temporary Email Address 
 
 *ᴘᴏᴡᴇʀᴇᴅ ʙʏ ᴄʜᴀʀᴜᴋᴀ ᴍᴀʜᴇꜱʜ*
         `;

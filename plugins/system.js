@@ -19,7 +19,7 @@ try{
 
 *HostName🌏:* ${os.hostname()}
 
-*Owner🛡️:* Charuka Mahesh & Chethana Rajaguru
+*Owner🛡️:* Charuka Mahesh & Umesha Sathyanjali
 
 *🧭-- QUEEN CHETHI MD --🧭*
 `

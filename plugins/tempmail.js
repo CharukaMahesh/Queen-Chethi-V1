@@ -1,11 +1,14 @@
 const axios = require('axios');
 const { cmd } = require('../command');
 
-const API_BASE_URL = 'https://tempmail.lol/api';
+// Define the base URL and headers for the API requests
+const API_BASE_URL = 'https://privatix-temp-mail-v1.p.rapidapi.com';
+const API_KEY = 'ed5bf847a5msh967ef84bdea2589p1022c4jsn667746880e64';
+const API_HOST = 'privatix-temp-mail-v1.p.rapidapi.com';
 
 cmd({
     pattern: "tempmail",
-    desc: "Generate a temporary email address and fetch emails",
+    desc: "Generate a temporary email and fetch emails",
     category: "tools",
     filename: __filename
 },
@@ -13,28 +16,47 @@ async (conn, mek, m, {
     from, quoted, reply, args
 }) => {
     try {
-        // Join the arguments to form the action (generate or fetch)
+        // Join the arguments to determine the action (generate or fetch)
         const action = args[0];
         
         if (!action) return reply('Please specify an action: `generate` or `fetch`.');
         
         if (action === 'generate') {
             // Generate a temporary email address
-            const response = await axios.post(`${myaje6xvgul31qq7bilp8o51y13h87bg802zzqgt6nj330y0}/generate`);
-            const email = response.data.email;
-            
+            const response = await axios.get(`${API_BASE_URL}/request/domains/`, {
+                headers: {
+                    'x-rapidapi-key': API_KEY,
+                    'x-rapidapi-host': API_HOST
+                }
+            });
+            const domain = response.data[0]; // Use the first domain from the response
+
+            const emailResponse = await axios.get(`${API_BASE_URL}/request/mailbox/`, {
+                headers: {
+                    'x-rapidapi-key': API_KEY,
+                    'x-rapidapi-host': API_HOST
+                }
+            });
+            const email = emailResponse.data.email;
+
             // Send the temporary email address to the user
             await conn.sendMessage(from, {
                 text: `📧 *Your Temporary Email:* ${email}`
             }, { quoted: mek });
         } else if (action === 'fetch') {
-            // Fetch the temporary email
+            // Fetch emails for the provided temporary email address
             const email = args[1];
             
-            if (!email) return reply('Please provide a temporary email address to fetch emails for.');
+            if (!email) return reply('Please provide a temporary email address.');
 
-            const response = await axios.get(`${tm.1725772991210.myaje6xvgul31qq7bilp8o51y13h87bg802zzqgt6nj330y0}/emails/${email}`);
-            const emails = response.data.emails;
+            // Fetch the emails
+            const response = await axios.get(`${API_BASE_URL}/request/email/${email}`, {
+                headers: {
+                    'x-rapidapi-key': API_KEY,
+                    'x-rapidapi-host': API_HOST
+                }
+            });
+            const emails = response.data;
 
             if (emails.length > 0) {
                 let emailMessages = emails.map((mail, index) => `

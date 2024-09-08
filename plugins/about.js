@@ -3,6 +3,7 @@ const fetch = require('node-fetch');  // Make sure to install node-fetch if you 
 
 cmd({
     pattern: "about",
+    alias: ["help"],
     desc: "Displays information about the bot",
     category: "information",
     filename: __filename
@@ -25,7 +26,7 @@ async (conn, mek, m, {
 
         // About message
         const aboutMessage = `
-👸*Queen Chethi Bot*👸
+👸`Queen Chethi Bot`👸
 
 *Owner & Founder*: Charuka Mahesh
 *Owner*: Chethana Rajaguru
@@ -40,8 +41,8 @@ async (conn, mek, m, {
 - To deploy your own instance of Queen Chethi Bot, visit our GitHub repository: [Queen Chethi Bot](https://github.com/CharukaMahesh/Queen-Chethi-V1)
 
 *GitHub Stats*:
-- **Forks**: ${forks}
-- **Stars**: ${stars}
+- *Forks*: ${forks}
+- *Stars*: ${stars}
 
 Type *.help* to see a detailed list of all available commands and how to use them.
 

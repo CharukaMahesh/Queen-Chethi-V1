@@ -1,5 +1,5 @@
 const { cmd } = require('../command');
-const TikTokScraper = require('tiktok-scraper');
+const axios = require('axios');
 
 cmd({
     pattern: "tiktok",
@@ -13,7 +13,7 @@ async (conn, mek, m, {
     try {
         // React with 🎵 when the command is triggered
         await conn.sendMessage(from, {
-            react: { text: "👋", key: mek.key }
+            react: { text: "🎵", key: mek.key }
         });
 
         if (!args.length) {
@@ -22,13 +22,22 @@ async (conn, mek, m, {
 
         const videoUrl = args[0];
 
-        // Fetch TikTok video details
-        const videoData = await TikTokScraper.getVideoMeta(videoUrl, { noWaterMark: true });
+        // Use an alternative API to get the TikTok video
+        const apiEndpoint = `https://api.tiktokdownloader.com/v1?url=${encodeURIComponent(videoUrl)}`;
+        
+        const response = await axios.get(apiEndpoint).catch(err => {
+            throw new Error("Failed to retrieve video data from the API.");
+        });
+
+        // Ensure the response is valid
+        if (!response.data || !response.data.downloadUrl) {
+            throw new Error("Invalid video data received from the API.");
+        }
 
         // Send the video to the user
         await conn.sendMessage(from, {
-            video: { url: videoData.collector[0].videoUrl },
-            caption: `🎥 *Video Title*: ${videoData.collector[0].text}\n📱 *From*: TikTok`
+            video: { url: response.data.downloadUrl },
+            caption: `🎥 *Video Title*: ${response.data.title}\n📱 *From*: TikTok`
         }, { quoted: mek });
 
     } catch (e) {

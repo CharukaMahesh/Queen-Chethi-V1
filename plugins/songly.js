@@ -21,14 +21,14 @@ async (conn, mek, m, {
             react: { text: "🎶", key: mek.key }
         });
 
-        // Construct the search query
-        const query = args.join(' ');
+        // Split the query into song title and artist (optional)
+        const [title, ...artist] = args.join(' ').split('-').map(s => s.trim());
 
         // Search for lyrics
-        let lyrics = await lyricsFinder("", query); // You can specify artist as the first parameter, if needed.
+        let lyrics = await lyricsFinder(artist.join(' '), title);
 
         if (!lyrics) {
-            lyrics = "Sorry, lyrics not found.";
+            lyrics = "Sorry, lyrics not found....";
         }
 
         // Send the lyrics
@@ -38,6 +38,4 @@ async (conn, mek, m, {
 
     } catch (e) {
         console.error("Error:", e);
-        reply(`An error occurred: ${e.message}`);
-    }
-});
+       

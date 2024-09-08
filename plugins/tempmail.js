@@ -25,16 +25,16 @@ async (conn, mek, m, {
             // Generate a temporary email address
             const response = await axios.get(`${API_BASE_URL}/request/domains/`, {
                 headers: {
-                    'x-rapidapi-key': API_KEY,
-                    'x-rapidapi-host': API_HOST
+                    'x-rapidapi-key': ed5bf847a5msh967ef84bdea2589p1022c4jsn667746880e64,
+                    'x-rapidapi-host': privatix-temp-mail-v1.p.rapidapi.com
                 }
             });
             const domain = response.data[0]; // Use the first domain from the response
 
             const emailResponse = await axios.get(`${API_BASE_URL}/request/mailbox/`, {
                 headers: {
-                    'x-rapidapi-key': API_KEY,
-                    'x-rapidapi-host': API_HOST
+                    'x-rapidapi-key': ed5bf847a5msh967ef84bdea2589p1022c4jsn667746880e64,
+                    'x-rapidapi-host': privatix-temp-mail-v1.p.rapidapi.com
                 }
             });
             const email = emailResponse.data.email;
@@ -52,8 +52,8 @@ async (conn, mek, m, {
             // Fetch the emails
             const response = await axios.get(`${API_BASE_URL}/request/email/${email}`, {
                 headers: {
-                    'x-rapidapi-key': API_KEY,
-                    'x-rapidapi-host': API_HOST
+                    'x-rapidapi-key': ed5bf847a5msh967ef84bdea2589p1022c4jsn667746880e64,
+                    'x-rapidapi-host': privatix-temp-mail-v1.p.rapidapi.com
                 }
             });
             const emails = response.data;

@@ -13,7 +13,11 @@ async (conn, mek, m, {
     from, reply, isQuotedImage, isQuotedVideo, quoted
 }) => {
     try {
-        // Check if the message is a quoted status
+        // Debugging: Log the detected media types
+        console.log("isQuotedImage:", isQuotedImage);
+        console.log("isQuotedVideo:", isQuotedVideo);
+
+        // Check if the message is a quoted status (image or video)
         if (!isQuotedImage && !isQuotedVideo) {
             return reply('Please reply to a status image or video to save it.');
         }
@@ -23,25 +27,27 @@ async (conn, mek, m, {
             react: { text: "💾", key: mek.key }
         });
 
-        // Determine whether the status is an image or video
-        const mediaType = isQuotedImage ? 'image' : 'video';
-
         // Download the media from the quoted message
         const mediaBuffer = await conn.downloadMediaMessage(quoted);
+
+        // Debugging: Check if the media buffer is valid
         if (!mediaBuffer) {
+            console.log("Failed to download the media.");
             return reply('Failed to download the status. Please try again.');
         }
 
-        // Define the file path to save the status media
-        const fileName = `status_${Date.now()}.${mediaType === 'image' ? 'jpg' : 'mp4'}`;
-        const filePath = path.join(__dirname, 'saved_statuses', fileName);
+        // Determine the media type and set file extension accordingly
+        const fileExtension = isQuotedImage ? 'jpg' : 'mp4';
+        const fileName = `status_${Date.now()}.${fileExtension}`;
 
         // Ensure the 'saved_statuses' directory exists
-        if (!fs.existsSync(path.join(__dirname, 'saved_statuses'))) {
-            fs.mkdirSync(path.join(__dirname, 'saved_statuses'));
+        const directoryPath = path.join(__dirname, 'saved_statuses');
+        if (!fs.existsSync(directoryPath)) {
+            fs.mkdirSync(directoryPath);
         }
 
         // Save the status media to the file system
+        const filePath = path.join(directoryPath, fileName);
         fs.writeFileSync(filePath, mediaBuffer);
 
         // Send a confirmation message

@@ -2,7 +2,7 @@ const weather = require('weather-js');
 const { cmd } = require('../command');
 
 cmd({
-    pattern: "weather1",
+    pattern: "weather",
     desc: "Get weather information for a city",
     category: "information",
     filename: __filename

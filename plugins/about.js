@@ -26,7 +26,7 @@ async (conn, mek, m, {
 
         // About message
         const aboutMessage = `
-👸`Queen Chethi Bot`👸
+👸Queen Chethi Bot👸
 
 *Owner & Founder*: Charuka Mahesh
 *Owner*: Chethana Rajaguru

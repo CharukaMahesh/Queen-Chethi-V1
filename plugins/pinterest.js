@@ -2,7 +2,7 @@ const Pinterest = require('pinterest-api');
 const { cmd } = require('../command');
 
 const pinterest = new Pinterest({
-    accessToken: 'YOUR_ACCESS_TOKEN'  // Replace with your Pinterest API access token
+    accessToken: 'pina_AMAYH4QWACLYKAIAGBAJCDCIYRRNBEIBQBIQC5TJYUKNM2MEXHND2UJGPJRDRSBF6LLBE5LEFP6645JQ3TYNQDN3DJBCHDIA'  // Replace with your Pinterest API access token
 });
 
 cmd({

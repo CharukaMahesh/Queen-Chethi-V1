@@ -23,14 +23,22 @@ async (conn, mek, m, {
 
         // Construct the search query
         const query = args.join(' ');
-        
-        // Search Wikipedia
-        const result = await wikipedia.summary(query, { sentences: 2 });
 
-        // Send the result
-        await conn.sendMessage(from, {
-            text: result.summary
-        }, { quoted: mek });
+        // Search Wikipedia
+        const result = await wikipedia.search(query);
+
+        // Check if the search returned results
+        if (result && result.query && result.query.search && result.query.search.length > 0) {
+            const pageTitle = result.query.search[0].title;
+            const pageSummary = await wikipedia.page(pageTitle).summary();
+            
+            // Send the summary
+            await conn.sendMessage(from, {
+                text: pageSummary
+            }, { quoted: mek });
+        } else {
+            reply('No results found.');
+        }
 
     } catch (e) {
         console.error("Error:", e);

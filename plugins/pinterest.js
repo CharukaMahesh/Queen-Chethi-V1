@@ -1,4 +1,4 @@
-const pinterest = require('pinterest-downloader');
+const pinterest = require('pinterest-dl');
 const { cmd } = require('../command');
 
 cmd({

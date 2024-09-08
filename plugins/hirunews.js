@@ -6,7 +6,7 @@ const { cmd } = require('../command');
 //📜--------HIRU NEWS-------📜//
 
 cmd({
-    pattern: "news",
+    pattern: "hirunews",
     desc: "Get the latest news from Hiru News",
     category: "information",
     filename: __filename
@@ -47,7 +47,7 @@ async (conn, mek, m, {
                 text: newsMessage
             }, { quoted: mek });
         } else {
-            reply("No news found.");
+            reply("No news found at This Time⏰.");
         }
 
     } catch (e) {

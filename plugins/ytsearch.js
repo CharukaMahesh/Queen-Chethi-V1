@@ -28,9 +28,8 @@ async (conn, mek, m, {
             const topVideo = results.videos[0]; // Get the top result
 
             let responseMessage = `
-*👸𝗤𝗨𝗘𝗘𝗡 𝗖𝗛𝗘𝗧𝗛𝗜 𝗬𝗧 𝗦𝗘𝗔𝗥𝗖𝗛👸*
+*𝗤𝗨𝗘𝗘𝗡 𝗖𝗛𝗘𝗧𝗛𝗜 𝗬𝗧 𝗦𝗘𝗔𝗥𝗖𝗛👸*
 
-            
 🎬 *Title:* ${topVideo.title}
 🕒 *Duration:* ${topVideo.timestamp}
 👁️ *Views:* ${topVideo.views}
@@ -44,7 +43,7 @@ async (conn, mek, m, {
             await conn.sendMessage(from, {
                 text: responseMessage,
                 previewType: 'IMAGE',
-                mediaUrl: topVideo.thumbnail
+                mediaUrl: ${topVideo.thumbnail}
             }, { quoted: mek });
         } else {
             reply('No videos found for your query.');

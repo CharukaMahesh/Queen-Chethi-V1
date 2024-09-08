@@ -45,7 +45,7 @@ async (conn, mek, m, {
 
 
 
-const { cmd } = require('../command');
+/*const { cmd } = require('../command');
 const canvacord = require('canvacord');
 const fs = require('fs');
 
@@ -90,3 +90,4 @@ async (conn, mek, m, {
         reply("An error occurred while creating the logo. Please try again later.");
     }
 });
+*/

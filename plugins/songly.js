@@ -1,4 +1,4 @@
-const songlyrics = require('songlyrics');
+const lyricsFinder = require('lyrics-finder');
 const { cmd } = require('../command');
 
 cmd({
@@ -13,7 +13,7 @@ async (conn, mek, m, {
     try {
         // Ensure a search query is provided
         if (!args.join(' ')) {
-            return reply('Please provide the song name or artist.');
+            return reply('Please provide the song name and optionally the artist.');
         }
 
         // React with 🎶 when the command is triggered
@@ -25,23 +25,16 @@ async (conn, mek, m, {
         const query = args.join(' ');
 
         // Search for lyrics
-        const lyricsData = await songlyrics(query);
+        let lyrics = await lyricsFinder("", query); // You can specify artist as the first parameter, if needed.
 
-        // Check if lyrics were found
-        if (lyricsData && lyricsData.lyrics) {
-            const message = `
-🎵 *${lyricsData.title}* by *${lyricsData.artist}*
-
-${lyricsData.lyrics}
-
-_Source: ${lyricsData.source}_
-            `;
-
-            // Send the lyrics
-            await conn.sendMessage(from, { text: message }, { quoted: mek });
-        } else {
-            reply('Lyrics not found. Please try with a different query.');
+        if (!lyrics) {
+            lyrics = "Sorry, lyrics not found.";
         }
+
+        // Send the lyrics
+        await conn.sendMessage(from, {
+            text: lyrics
+        }, { quoted: mek });
 
     } catch (e) {
         console.error("Error:", e);

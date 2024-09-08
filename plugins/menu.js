@@ -10,9 +10,7 @@ cmd({
     category: "information",
     filename: __filename
 },
-async (conn, mek, m, {
-    from, quoted, reply
-}) => {
+async(conn, mek, m,{from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply}) => {
     try {
         // React with 📜 when the command is triggered
         await conn.sendMessage(from, {
@@ -22,6 +20,8 @@ async (conn, mek, m, {
         // Construct the menu message
         let menuMessage = `
  --- 👸𝐐𝐔𝐄𝐄𝐍 𝐂𝐇𝐄𝐓𝐇𝐈 𝐌𝐃👸 ---
+
+👋𝐇𝐄𝐋𝐋𝐎 ${pushname}
 _____________________________________
 
     *°|----🌏 𝙳𝙾𝚆𝙽𝙻𝙾𝙰𝙳 𝙼𝙴𝙽𝚄 🌏----|°*

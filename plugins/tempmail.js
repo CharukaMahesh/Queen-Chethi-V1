@@ -20,7 +20,7 @@ async (conn, mek, m, {
         
         if (action === 'generate') {
             // Generate a temporary email address
-            const response = await axios.post(`${API_BASE_URL}/generate`);
+            const response = await axios.post(`${myaje6xvgul31qq7bilp8o51y13h87bg802zzqgt6nj330y0}/generate`);
             const email = response.data.email;
             
             // Send the temporary email address to the user

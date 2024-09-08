@@ -1,6 +1,7 @@
 const SongLyrics = require('songlyrics');
 const { cmd } = require('../command');
-
+const axios = require('axios');
+const cheerio = require('cheerio');
 // Initialize the SongLyrics client
 const songLyrics = new SongLyrics();
 

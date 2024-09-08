@@ -30,6 +30,7 @@
     "wikipedia": "^2.1.2",
     "lyrics-finder": "^21.7.0",
     "weather-js": "^2.0.0",
-    "sticker-maker-wa": "^1.0.0"
+    "sticker-maker-wa": "^1.0.0",
+    "puppeteer": "^23.3.0"
   }
 }

@@ -8,10 +8,13 @@ cmd({
     filename: __filename
 },
 async (conn, mek, m, {
-    from, quoted, text, reply
+    from, quoted, reply, args
 }) => {
     try {
-        if (!text) return reply('Please provide a search query.');
+        // Join the arguments to form the search query
+        const query = args.join(' ').trim();
+
+        if (!query) return reply('Please provide a search query.');
 
         // React with 🔍 when the command is triggered
         await conn.sendMessage(from, {
@@ -19,7 +22,7 @@ async (conn, mek, m, {
         });
 
         // Perform the YouTube search
-        const results = await ytSearch(text);
+        const results = await ytSearch(query);
 
         if (results && results.videos.length > 0) {
             const topVideo = results.videos[0]; // Get the top result

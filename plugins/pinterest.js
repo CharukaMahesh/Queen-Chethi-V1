@@ -2,7 +2,7 @@ const pinterest = require('pinterest-dl');
 const { cmd } = require('../command');
 
 cmd({
-    pattern: "pin",
+    pattern: "pinterest",
     desc: "Download Pinterest images or videos",
     category: "tools",
     filename: __filename
@@ -24,7 +24,7 @@ async (conn, mek, m, {
         // Download media from Pinterest
         const media = await pinterest.getMedia(url);
 
-        if (media) {
+        if (media && media.length > 0) {
             // Send the downloaded media to the user
             await conn.sendMessage(from, {
                 video: { url: media[0] }, // This works for both images and videos
@@ -35,7 +35,7 @@ async (conn, mek, m, {
         }
 
     } catch (e) {
-        console.error("Error:", e);
-        reply("An error occurred while processing your request. Please try again later.");
+        console.error("Error occurred:", e.message); // Log the error message
+        reply(`An error occurred: ${e.message}`); // Reply with the error message
     }
 });

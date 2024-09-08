@@ -3,7 +3,7 @@ const puppeteer = require('puppeteer');
 const fs = require('fs');
 
 cmd({
-    pattern: "screenshot",
+    pattern: "ss",
     desc: "Take a screenshot of a given URL",
     category: "tools",
     filename: __filename

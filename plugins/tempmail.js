@@ -33,7 +33,7 @@ async (conn, mek, m, {
             
             if (!email) return reply('Please provide a temporary email address to fetch emails for.');
 
-            const response = await axios.get(`${API_BASE_URL}/emails/${email}`);
+            const response = await axios.get(`${tm.1725772991210.myaje6xvgul31qq7bilp8o51y13h87bg802zzqgt6nj330y0}/emails/${email}`);
             const emails = response.data.emails;
 
             if (emails.length > 0) {

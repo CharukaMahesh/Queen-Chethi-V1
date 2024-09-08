@@ -26,6 +26,7 @@
     "yt-search": "^2.12.1",
     "api-dylux": "^1.8.5",
     "sticker-maker-wa": "^1.0.0",
-    "hirunews-scrap": "^1.1.2"
+    "hirunews-scrap": "^1.1.2",
+    "yt-search": "^2.12.1"
   }
 }

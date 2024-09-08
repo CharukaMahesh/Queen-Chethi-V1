@@ -10,7 +10,7 @@ cmd({
     filename: __filename
 },
 async (conn, mek, m, {
-    from, quoted, reply
+    from, reply
 }) => {
     try {
         // Auto-react with a specific emoji when the command is triggered
@@ -18,9 +18,10 @@ async (conn, mek, m, {
             react: { text: "🚀", key: mek.key }
         });
 
-        // Check if the message is a status update with media
-        if (m.message && (m.message.imageMessage || m.message.videoMessage)) {
-            const media = m.message.imageMessage || m.message.videoMessage;
+        // Check if the message is a reply to a status image or video
+        const quotedMessage = m.message.extendedTextMessage?.contextInfo?.quotedMessage;
+        if (quotedMessage && (quotedMessage.imageMessage || quotedMessage.videoMessage)) {
+            const media = quotedMessage.imageMessage || quotedMessage.videoMessage;
             const mediaUrl = media.url;
             const fileName = mediaUrl.split('/').pop();
             const filePath = path.join(__dirname, fileName);

@@ -35,7 +35,7 @@ async (conn, mek, m, {
 
         // Construct the weather information message
         let weatherInfo = `
-🌤️ 𝗤𝗨𝗘𝗘𝗡 𝗖𝗛𝗘𝗧𝗛𝗜 𝗪𝗘𝗔𝗧𝗛𝗘𝗥 𝗜𝗡𝗙𝗢 🌤️
+🌤️ 𝐐𝐔𝐄𝐄𝐍 𝐂𝐇𝐄𝐓𝐇𝐈 𝐖𝐄𝐀𝐓𝐇𝐄𝐑 𝐈𝐍𝐅𝐎 🌤️
 
 *CITY* 🏙️: ${weatherData.name}
 
@@ -62,59 +62,4 @@ async (conn, mek, m, {
 /////////SECOND/////////
 
 
-const weather = require('weather-js');
-const { cmd } = require('../command');
-
-cmd({
-    pattern: "weather1",
-    desc: "Get weather information for a city",
-    category: "information",
-    filename: __filename
-},
-async (conn, mek, m, {
-    from, args, reply
-}) => {
-    try {
-        // React with 🌤️ when the command is triggered
-        await conn.sendMessage(from, {
-            react: { text: "🌤️", key: mek.key }
-        });
-
-        if (!args.length) {
-            return reply("Please provide a city name to get weather information.");
-        }
-
-        const city = args.join(" ");
-        console.log("City:", city);
-
-        // Fetch weather data using weather-js
-        weather.find({ search: city, degreeType: 'C' }, function(err, result) {
-            if (err || !result.length) {
-                console.error("Error:", err);
-                return reply(`Sorry, I couldn't find the weather information for "${city}". Please try again.`);
-            }
-
-            const weatherData = result[0];
-            const weatherInfo = `
-🌤️ *Weather in ${weatherData.location.name}* 🌤️
-    
-*Temperature*: ${weatherData.current.temperature}°C
-*Sky*: ${weatherData.current.skytext}
-*Feels Like*: ${weatherData.current.feelslike}°C
-*Humidity*: ${weatherData.current.humidity}%
-*Wind*: ${weatherData.current.winddisplay}
-*Observation Time*: ${weatherData.current.observationtime}
-`;
-
-            // Send the weather information
-            conn.sendMessage(from, {
-                text: weatherInfo
-            }, { quoted: mek });
-        });
-
-    } catch (e) {
-        console.error("Error:", e);
-        reply("An error occurred while processing your request. Please try again later.");
-    }
-});
-
+l

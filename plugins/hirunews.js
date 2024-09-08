@@ -19,8 +19,14 @@ async (conn, mek, m, {
         // Create an instance of the HiruNewsScraper
         const scraper = new HiruNewsScraper();
 
+        // Debug log: Start fetching news
+        console.log("Fetching news...");
+
         // Fetch the latest news
         const news = await scraper.getLatestNews();
+
+        // Debug log: Print the fetched news data
+        console.log("News fetched:", news);
 
         if (news && news.length > 0) {
             let newsMessage = 'Latest news:\n\n';
@@ -34,7 +40,9 @@ async (conn, mek, m, {
             reply("No news found.");
         }
     } catch (e) {
+        // Debug log: Print the error
         console.error("Error:", e);
+
         reply("An error occurred while fetching news. Please try again later.");
     }
 });

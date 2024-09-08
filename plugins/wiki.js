@@ -24,21 +24,15 @@ async (conn, mek, m, {
         // Construct the search query
         const query = args.join(' ');
 
-        // Search Wikipedia
-        const result = await wikipedia.search(query);
+        // Directly fetch the page
+        const pageTitle = query; // Use query as title directly
+        const page = await wikipedia.page(pageTitle);
+        const pageSummary = await page.summary();
 
-        // Check if the search returned results
-        if (result && result.query && result.query.search && result.query.search.length > 0) {
-            const pageTitle = result.query.search[0].title;
-            const pageSummary = await wikipedia.page(pageTitle).summary();
-            
-            // Send the summary
-            await conn.sendMessage(from, {
-                text: pageSummary
-            }, { quoted: mek });
-        } else {
-            reply('No results found.');
-        }
+        // Send the summary
+        await conn.sendMessage(from, {
+            text: pageSummary
+        }, { quoted: mek });
 
     } catch (e) {
         console.error("Error:", e);

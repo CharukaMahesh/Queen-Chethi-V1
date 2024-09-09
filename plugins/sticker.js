@@ -1,6 +1,6 @@
 const { cmd } = require('../command');
 const { Sticker, StickerTypes } = require('wa-sticker-formatter');
-const axios = require('axios'); // To handle image download
+const axios = require('axios');
 const fs = require('fs');
 const path = require('path');
 
@@ -17,25 +17,21 @@ async (conn, mek, m, { from, quoted, reply }) => {
             react: { text: "🚀", key: mek.key }
         });
 
-        // Check if the message is replying to an image
-        if (!quoted || !quoted.imageMessage) {
+        // Ensure the message is replying to an image
+        if (!quoted || !quoted.message.imageMessage) {
             return reply("Please reply to an image to convert it to a sticker.");
         }
 
-        // Download the image
-        const mediaKey = quoted.imageMessage.mediaKey;
-        const mediaUrl = await conn.downloadMediaMessage(quoted);
+        // Get media key and media URL
+        const mediaKey = quoted.message.imageMessage.mediaKey;
+        const mediaUrl = await conn.downloadAndSaveMediaMessage(quoted, 'temp_image.jpg');
 
         if (!mediaUrl) {
             return reply("Failed to download the image. Please try again.");
         }
 
-        // Save the image to a temporary file
-        const tempFilePath = path.join(__dirname, 'temp_image.jpg');
-        fs.writeFileSync(tempFilePath, mediaUrl);
-
         // Create a sticker from the image
-        const sticker = new Sticker(tempFilePath, {
+        const sticker = new Sticker(mediaUrl, {
             pack: 'Queen Chethi', // Sticker pack name
             author: 'Your Bot', // Sticker author name
             type: StickerTypes.FULL, // Sticker type (FULL, CROPPED, CIRCLE)
@@ -58,7 +54,7 @@ async (conn, mek, m, { from, quoted, reply }) => {
         }
 
         // Clean up the temporary file
-        fs.unlinkSync(tempFilePath);
+        fs.unlinkSync('temp_image.jpg');
 
     } catch (e) {
         console.error("Error:", e);

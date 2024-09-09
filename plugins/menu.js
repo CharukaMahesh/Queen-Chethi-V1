@@ -21,7 +21,7 @@ async(conn, mek, m,{from, quoted, body, isCmd, command, args, q, isGroup, sender
         let menuMessage = `
 --- 👸𝐐𝐔𝐄𝐄𝐍 𝐂𝐇𝐄𝐓𝐇𝐈 𝐌𝐃👸 ---
 
-👋𝐇𝐄𝐋𝐋𝐎 ${pushname
+👋𝐇𝐄𝐋𝐋𝐎 ${pushname}
 📡𝐂𝐎𝐌𝐌𝐀𝐍𝐃 ${command}
 _____________________________________
 

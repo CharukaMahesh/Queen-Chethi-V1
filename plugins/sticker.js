@@ -1,5 +1,6 @@
 const { cmd } = require('../command');
 const { Sticker, StickerTypes } = require('wa-sticker-formatter');
+const axios = require('axios'); // Use axios to download the image
 
 cmd({
     pattern: "sticker",
@@ -19,14 +20,19 @@ async (conn, mek, m, { from, quoted, reply }) => {
             return reply("Please reply to an image to convert it to a sticker.");
         }
 
+        // Get media key and message ID
+        const mediaKey = quoted.imageMessage.mediaKey;
+        const mediaUrl = quoted.imageMessage.url;
+
         // Download the image
-        const image = await conn.downloadMediaMessage(quoted);
-        if (!image) {
+        const imageBuffer = await axios.get(mediaUrl, { responseType: 'arraybuffer' });
+
+        if (!imageBuffer) {
             return reply("Failed to download the image. Please try again.");
         }
 
         // Create a sticker from the image
-        const sticker = new Sticker(image, {
+        const sticker = new Sticker(imageBuffer.data, {
             pack: 'Queen Chethi', // Sticker pack name
             author: 'Your Bot', // Sticker author name
             type: StickerTypes.FULL, // Sticker type (FULL, CROPPED, CIRCLE)

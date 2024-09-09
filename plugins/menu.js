@@ -14,7 +14,7 @@ async(conn, mek, m,{from, quoted, body, isCmd, command, args, q, isGroup, sender
     try {
         // React with 📜 when the command is triggered
         await conn.sendMessage(from, {
-            react: { text: "📜", key: mek.key }
+            react: { text: "📝", key: mek.key }
         });
 
         // Construct the menu message
@@ -42,6 +42,8 @@ _____________________________________
 
 📡.ai - Ask Any Question From Chatgpt..
 
+📡.aiimg - Create Images Using Ai..
+
 _____________________________________
          *°|----🌏 𝚂𝙴𝙰𝚁𝙲𝙷-𝙼𝙴𝙽𝚄 🌏----|°*
 _____________________________________
@@ -49,6 +51,8 @@ _____________________________________
 📡.weather[Country Or City] - To Know Current Weather Situation Of Any Country
 
 📡.ytsearch - Search Accross Youtube..
+
+📡.wiki - Search Accross Wikipedia..
 
 _____________________________________
          *°|----🌏 𝙾𝚆𝙽𝙴𝚁-𝙼𝙴𝙽𝚄 🌏----|°*
@@ -74,7 +78,9 @@ _____________________________________
          *°|----🌏 𝙾𝚃𝙷𝙴𝚁🌏----|°*
 _____________________________________
 
-📡.tempmail - Get Temporary Email Address 
+📡.tempmail - Get Temporary Email Address..
+
+📡.about - Get About Of The Bot..
 
 *ᴘᴏᴡᴇʀᴇᴅ ʙʏ ᴄʜᴀʀᴜᴋᴀ ᴍᴀʜᴇꜱʜ*
         `;

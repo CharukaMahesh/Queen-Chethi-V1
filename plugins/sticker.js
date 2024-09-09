@@ -21,6 +21,9 @@ async (conn, mek, m, { from, quoted, reply }) => {
 
         // Download the image
         const image = await conn.downloadMediaMessage(quoted);
+        if (!image) {
+            return reply("Failed to download the image. Please try again.");
+        }
 
         // Create a sticker from the image
         const sticker = new Sticker(image, {
@@ -32,17 +35,27 @@ async (conn, mek, m, { from, quoted, reply }) => {
             quality: 70, // Quality of the sticker
         });
 
-        // Send the sticker to the chat
+        // Convert to buffer and send sticker
         const stickerBuffer = await sticker.toBuffer();
-        await conn.sendMessage(from, { sticker: stickerBuffer }, { quoted: mek });
+        if (stickerBuffer) {
+            await conn.sendMessage(from, { sticker: stickerBuffer }, { quoted: mek });
 
-        // React with 📡 when the sticker is successfully sent
-        await conn.sendMessage(from, {
-            react: { text: "📡", key: mek.key }
-        });
+            // React with 📡 when the sticker is successfully sent
+            await conn.sendMessage(from, {
+                react: { text: "📡", key: mek.key }
+            });
+        } else {
+            return reply("Failed to create sticker. Please try again.");
+        }
 
     } catch (e) {
         console.error("Error:", e);
-        reply("An error occurred while processing your request. Please try again later.");
+
+        // React with 😞 in case of an error
+        await conn.sendMessage(from, {
+            react: { text: "😞", key: mek.key }
+        });
+
+        reply(`An error occurred while processing your request: ${e.message}`);
     }
 });

@@ -34,6 +34,7 @@
     "puppeteer": "^23.3.0",
     "canvacord": "^6.0.2",
     "wa-sticker-formatter": "^4.4.4",
-    "archiver": "^7.0.1"
+    "archiver": "^7.0.1",
+    "google-translate-api": "^2.3.0"
   }
 }

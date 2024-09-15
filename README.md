@@ -11,7 +11,7 @@
 
 STEPS TO DEPLOY YOUR BOT
 
-1, Star the repo up there then click Here To <a href=https://github.com/CharukaMahesh/Queen-Chethi-V1/fork">FORK</a>
+1, Star the repo up there then click Here To <a href="https://github.com/CharukaMahesh/Queen-Chethi-V1/fork">FORK</a>
 
 2, TAP ON GET SESSIONS
 

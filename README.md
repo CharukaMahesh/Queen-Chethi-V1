@@ -11,10 +11,14 @@
 
 STEPS TO DEPLOY YOUR BOT
 
-1, Star the repo up there then click Here To FORK
+1, Star the repo up there then click Here To <a href=https://github.com/CharukaMahesh/Queen-Chethi-V1/fork">FORK</a>
 
 2, TAP ON GET SESSIONS
+
+Click To Open <a href="https://queen-chethi-pair-code-69d2ba994018.herokuapp.com/">GET SESSION</a>
 
 3, CONNECT TO WHATSAPP WITH PAIRING CODE
 
 4, TAP DEPLOY.., AND DEPLOY IT ON HEROKU...
+
+ https://dashboard.heroku.com/new?template=Your Forked Link

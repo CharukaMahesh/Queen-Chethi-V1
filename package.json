@@ -36,6 +36,7 @@
     "wa-sticker-formatter": "^4.4.4",
     "archiver": "^7.0.1",
     "google-translate-api": "^2.3.0",
-    "speedtest-net": "^2.2.0"
+    "speedtest-net": "^2.2.0",
+    "moment": "^2.30.1"
   }
 }

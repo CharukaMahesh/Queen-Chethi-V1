@@ -10,6 +10,7 @@
 ## Deployment
 
 STEPS TO DEPLOY YOUR BOT
+
 1, Star the repo up there then click Here To FORK
 
 2, TAP ON GET SESSIONS

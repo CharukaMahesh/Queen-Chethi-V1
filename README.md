@@ -9,3 +9,11 @@
 
 ## Deployment
 
+STEPS TO DEPLOY YOUR BOT
+1, Star the repo up there then click Here To FORK
+
+2, TAP ON GET SESSIONS
+
+3, CONNECT TO WHATSAPP WITH PAIRING CODE
+
+4, TAP DEPLOY.., AND DEPLOY IT ON HEROKU...

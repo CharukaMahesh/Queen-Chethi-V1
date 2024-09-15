@@ -19,6 +19,8 @@ Click To Open <a href="https://queen-chethi-pair-code-69d2ba994018.herokuapp.com
 
 3, CONNECT TO WHATSAPP WITH PAIRING CODE
 
-4, TAP DEPLOY.., AND DEPLOY IT ON HEROKU...
+4, Now Edit Config.js File
 
- https://dashboard.heroku.com/new?template=Your Forked Link
+5, TAP DEPLOY.., AND DEPLOY IT ON HEROKU...
+
+ https://dashboard.heroku.com/new?template= Your Forked Link

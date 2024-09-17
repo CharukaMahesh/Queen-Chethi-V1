@@ -39,6 +39,8 @@ _____________________________________
 
 📡.ytmp4[video name or URL] - Download Video From Youtube..
 
+📡.apk[apk name or URL] - Download Apk Files..
+
 _____________________________________
          *°|----🌏 𝙰𝙸-𝙼𝙴𝙽𝚄 🌏----|°*
 _____________________________________
@@ -57,7 +59,13 @@ _____________________________________
 
 📡.wiki - Search Accross Wikipedia..
 
+📡.google - Search Accross Google..
+
+📡.binance - View Crypto Buying Abd Selling Price..
+
 📡.ip - Get Deatils Of An Ip Address..
+
+📡.npm - Search The Npm Packages..
 
 _____________________________________
          *°|----🌏 𝙾𝚆𝙽𝙴𝚁-𝙼𝙴𝙽𝚄 🌏----|°*
@@ -87,7 +95,9 @@ _____________________________________
 
 📡.about - Get About Of The Bot..
 
-📡.quate - Get Random Quate..
+📡.quote - Get Random Quate..
+
+📡.qrcode - For Genarate Qr Code For Given Text..
 
 _____________________________________
          *°|----🌏 𝙶𝚁𝙾𝚄𝙿 𝙼𝙴𝙽𝚄 🌏----|°*

@@ -1,34 +1,22 @@
-const { cmd } = require('../command');
+const { Client } = require('whatsapp-web.js');
+const client = new Client();
 
-// Listen for all incoming messages
-cmd({
-    on: 'text', // Listen for text messages
-    desc: "Auto-reply to 'Gn' or 'Good Night'",
-    category: "auto-reply",
-    filename: __filename
-},
-async (conn, mek, m, {
-    from, text, reply
-}) => {
+client.on('message', async (message) => {
     try {
-        // Convert message to lowercase for case-insensitive matching
-        const message = text.toLowerCase();
+        // Convert message body to lowercase for case-insensitive matching
+        const msgBody = message.body.toLowerCase();
 
-        // Check if the message is "gn" or "good night"
-        if (message === "gn" || message === "good night") {
-            // React with a 🌙 emoji
-            await conn.sendMessage(from, {
-                react: { text: "🌙", key: mek.key }
-            });
+        // Check if message contains "good night" or similar phrases
+        if (msgBody.includes('gn') || msgBody.includes('good night')) {
+            // React with 🌙
+            await message.react('🌙');
 
-            // Auto-reply with a good night message
-            await conn.sendMessage(from, {
-                text: "Good night! Sleep well and sweet dreams! 😴🌙"
-            }, { quoted: mek });
+            // Send a reply
+            await message.reply("Good night! Sleep well and sweet dreams! 🥱");
         }
-
     } catch (e) {
         console.error("Error:", e);
-        reply("An error occurred while processing your request.");
     }
 });
+
+client.initialize();

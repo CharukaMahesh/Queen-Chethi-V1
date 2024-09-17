@@ -15,9 +15,9 @@ async (conn, mek, m, { from, quoted, args, q, reply }) => {
             return reply("Please provide the text to generate a QR code.");
         }
 
-        // React with 📈 when the command is triggered
+        // React with ♻️ when the command is triggered
         await conn.sendMessage(from, {
-            react: { text: "📈", key: mek.key }
+            react: { text: "♻️", key: mek.key }
         });
 
         // Generate QR code
@@ -29,6 +29,11 @@ async (conn, mek, m, { from, quoted, args, q, reply }) => {
             image: fs.readFileSync(qrCodePath),
             caption: `Here is your QR code for: ${q}`
         }, { quoted: mek });
+
+        // React with ✅ after successfully sending the QR code
+        await conn.sendMessage(from, {
+            react: { text: "✅", key: mek.key }
+        });
 
         // Clean up the temporary file
         fs.unlinkSync(qrCodePath);

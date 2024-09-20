@@ -1,137 +1,55 @@
 const { cmd } = require('../command');
-const fg = require('api-dylux');
-const yts = require('yt-search');
+const nmd = require('nayan-media-downloader');
 
-//_____________
-
-//🎧--------AUDIO-DOWNLOAD-------🎧//
-
-cmd({
-    pattern: "song",
-    desc: "Download songs",
-    category: "download",
-    filename: __filename
-},
-async (conn, mek, m, {
-    from, quoted, q, reply
-}) => {
-    try {
-        if (!q) return reply("Please provide a valid URL or song name... 🙋‍♂️");
-
-        // React with 🎧 when the command is triggered
-        await conn.sendMessage(from, {
-            react: { text: "🎧", key: mek.key }
-        });
-
-        const search = await yts(q);
-        if (!search || !search.videos || !search.videos.length) {
-            return reply("No results found for the given query.");
-        }
-
-        const data = search.videos[0];
-        const url = data.url;
-
-        let desc = `
-🎧𝗤𝗨𝗘𝗘𝗡 𝗖𝗛𝗘𝗧𝗛𝗜 𝗬𝗧 𝗠𝗨𝗦𝗜𝗖 𝗗𝗢𝗪𝗡𝗟𝗢𝗔𝗗𝗘𝗥🎧
-
-*TITLE* 🔍: ${data.title}
-
-*DESCRIPTION* 🗒️: ${data.description}
-
-*TIME* ⌛: ${data.timestamp}
-
-*AGO* ☄️: ${data.ago}
-
-*VIEWS* 📽️: ${data.views}
-
-*ᴘᴏᴡᴇʀᴇᴅ ʙʏ ᴄʜᴀʀᴜᴋᴀ ᴍᴀʜᴇꜱʜ*
-        `;
-
-        await conn.sendMessage(from, {
-            image: { url: data.thumbnail },
-            caption: desc
-        }, { quoted: mek });
-
-        // Download Audio
-        let downAudio = await fg.yta(url);
-        if (!downAudio || !downAudio.dl_url) {
-            return reply("Failed to download audio. Please try again later.");
-        }
-        let downloadAudioUrl = downAudio.dl_url;
-
-        // Send Audio File
-        await conn.sendMessage(from, {
-            audio: { url: downloadAudioUrl },
-            mimetype: "audio/mpeg"
-        }, { quoted: mek });
-    } catch (e) {
-        console.error("Error:", e);
-        reply("An error occurred while processing your request. Please try again later.");
-    }
-});
-
-
-
+// YouTube Song Download Command
 cmd({
     pattern: "ytmp3",
-    desc: "Download songs",
+    desc: "Download songs from YouTube",
     category: "download",
     filename: __filename
 },
-async (conn, mek, m, {
-    from, quoted, q, reply
-}) => {
+async (conn, mek, m, { from, quoted, q, reply }) => {
     try {
-        if (!q) return reply("Please provide a valid URL or song name... 🙋‍♂️");
+        if (!q) return reply("Please provide a valid YouTube URL or song name.");
 
-        // React with 🎧 when the command is triggered
+        // React with 🔍 while searching for the song
         await conn.sendMessage(from, {
-            react: { text: "🎧", key: mek.key }
+            react: { text: "🔍", key: mek.key }
+        });
+        reply("Searching for song on YouTube...");
+
+        // Download YouTube audio using nayan-media-downloader
+        const result = await nmd.youtube(q, { audio: true });
+        
+        if (!result || !result.audio || !result.audio.url) {
+            return reply("Failed to fetch the song. Please try again later.");
+        }
+
+        // React with 📥 while downloading the song
+        await conn.sendMessage(from, {
+            react: { text: "📥", key: mek.key }
+        });
+        reply("Downloading song...");
+
+        // Send the audio file after downloading
+        await conn.sendMessage(from, {
+            audio: { url: result.audio.url },
+            mimetype: 'audio/mpeg',
+            ptt: false // If you want it as a voice note, set ptt: true
+        }, { quoted: mek });
+
+        // React with 📤 while uploading the song
+        await conn.sendMessage(from, {
+            react: { text: "📤", key: mek.key }
         });
 
-        const search = await yts(q);
-        if (!search || !search.videos || !search.videos.length) {
-            return reply("No results found for the given query.");
-        }
-
-        const data = search.videos[0];
-        const url = data.url;
-
-        let desc = `
-🎧𝗤𝗨𝗘𝗘𝗡 𝗖𝗛𝗘𝗧𝗛𝗜 𝗬𝗧 𝗠𝗨𝗦𝗜𝗖 𝗗𝗢𝗪𝗡𝗟𝗢𝗔𝗗𝗘𝗥🎧
-
-*TITLE* 🔍: ${data.title}
-
-*DESCRIPTION* 🗒️: ${data.description}
-
-*TIME* ⌛: ${data.timestamp}
-
-*AGO* ☄️: ${data.ago}
-
-*VIEWS* 📽️: ${data.views}
-
-*ᴘᴏᴡᴇʀᴇᴅ ʙʏ ᴄʜᴀʀᴜᴋᴀ ᴍᴀʜᴇꜱʜ*
-        `;
-
+        // React with ✅ after the successful download and upload
         await conn.sendMessage(from, {
-            image: { url: data.thumbnail },
-            caption: desc
-        }, { quoted: mek });
-
-        // Download Audio
-        let downAudio = await fg.yta(url);
-        if (!downAudio || !downAudio.dl_url) {
-            return reply("Failed to download audio. Please try again later.");
-        }
-        let downloadAudioUrl = downAudio.dl_url;
-
-        // Send Audio File
-        await conn.sendMessage(from, {
-            audio: { url: downloadAudioUrl },
-            mimetype: "audio/mpeg"
-        }, { quoted: mek });
+            react: { text: "✅", key: mek.key }
+        });
+        
     } catch (e) {
-        console.error("Error:", e);
+        console.error("Error downloading the song:", e);
         reply("An error occurred while processing your request. Please try again later.");
     }
 });

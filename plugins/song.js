@@ -19,8 +19,12 @@ async (conn, mek, m, { from, quoted, q, reply }) => {
         reply("Searching for song on YouTube...");
 
         // Download YouTube audio using nayan-media-downloader
-        const result = await nmd.youtube(q, { audio: true });
+        const result = await nmd.youtube(q, { audio: true }).catch(e => {
+            console.error("Error during YouTube search:", e);
+            return null;
+        });
         
+        // Check if result is valid
         if (!result || !result.audio || !result.audio.url) {
             return reply("Failed to fetch the song. Please try again later.");
         }

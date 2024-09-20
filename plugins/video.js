@@ -14,8 +14,9 @@ async (conn, mek, m, { from, quoted, q, reply }) => {
     try {
         if (!q) return reply("Please provide a valid URL or video name... 🙋‍♂️");
 
-        // React with 🎥 when the command is triggered
-        await conn.sendMessage(from, { react: { text: "🎥", key: mek.key } });
+        // React with 🔍 and show searching text
+        await conn.sendMessage(from, { react: { text: "🔍", key: mek.key } });
+        reply("Qᴜᴇᴇɴ ᴄʜᴇᴛʜɪ ꜱᴇᴀʀᴄʜɪɴɢ ꜰᴏʀ ʏᴏᴜʀ ʀᴇQᴜᴇꜱᴛ......🪄");
 
         // Search video
         const search = await yts(q);
@@ -40,8 +41,9 @@ async (conn, mek, m, { from, quoted, q, reply }) => {
 
         await conn.sendMessage(from, { image: { url: data.thumbnail }, caption: desc }, { quoted: mek });
 
-        // React with 📥 when video downloading starts
+        // React with 📥 and show downloading text
         await conn.sendMessage(from, { react: { text: "📥", key: mek.key } });
+        reply("Downloading video...");
 
         // Download Video
         let downVideo = await fg.ytv(url);
@@ -50,8 +52,9 @@ async (conn, mek, m, { from, quoted, q, reply }) => {
         }
         let downloadVideoUrl = downVideo.dl_url;
 
-        // React with 📤 when video is uploading
+        // React with 📤 and show uploading text
         await conn.sendMessage(from, { react: { text: "📤", key: mek.key } });
+        reply("Uploading video...");
 
         // Send Video File
         await conn.sendMessage(from, {
@@ -62,6 +65,7 @@ async (conn, mek, m, { from, quoted, q, reply }) => {
 
         // React with ✅ when upload is complete
         await conn.sendMessage(from, { react: { text: "✅", key: mek.key } });
+        reply("Video uploaded successfully ✅");
 
     } catch (e) {
         console.error("Error:", e);
@@ -81,8 +85,9 @@ async (conn, mek, m, { from, quoted, q, reply }) => {
     try {
         if (!q) return reply("Please provide a valid URL or video name... 🙋‍♂️");
 
-        // React with 🎥 when the command is triggered
-        await conn.sendMessage(from, { react: { text: "🎥", key: mek.key } });
+        // React with 🔍 and show searching text
+        await conn.sendMessage(from, { react: { text: "🔍", key: mek.key } });
+        reply("Qᴜᴇᴇɴ ᴄʜᴇᴛʜɪ ꜱᴇᴀʀᴄʜɪɴɢ ꜰᴏʀ ʏᴏᴜʀ ʀᴇQᴜᴇꜱᴛ......🪄");
 
         // Search video
         const search = await yts(q);
@@ -107,8 +112,9 @@ async (conn, mek, m, { from, quoted, q, reply }) => {
 
         await conn.sendMessage(from, { image: { url: data.thumbnail }, caption: desc }, { quoted: mek });
 
-        // React with 📥 when video downloading starts
+        // React with 📥 and show downloading text
         await conn.sendMessage(from, { react: { text: "📥", key: mek.key } });
+        reply("Downloading video...");
 
         // Download Video
         let downVideo = await fg.ytv(url);
@@ -117,8 +123,9 @@ async (conn, mek, m, { from, quoted, q, reply }) => {
         }
         let downloadVideoUrl = downVideo.dl_url;
 
-        // React with 📤 when video is uploading
+        // React with 📤 and show uploading text
         await conn.sendMessage(from, { react: { text: "📤", key: mek.key } });
+        reply("Uploading video...");
 
         // Send Video File
         await conn.sendMessage(from, {
@@ -129,6 +136,7 @@ async (conn, mek, m, { from, quoted, q, reply }) => {
 
         // React with ✅ when upload is complete
         await conn.sendMessage(from, { react: { text: "✅", key: mek.key } });
+        reply("Video uploaded successfully ✅");
 
     } catch (e) {
         console.error("Error:", e);

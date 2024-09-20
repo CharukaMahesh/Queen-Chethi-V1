@@ -1,93 +1,53 @@
-const fetch = require('node-fetch');
 const { cmd } = require('../command');
-
-cmd({
-    pattern: "aiimg",
-    desc: "Generate a logo with custom text",
-    category: "tools",
-    filename: __filename
-},
-async (conn, mek, m, {
-    from, reply, args
-}) => {
-    try {
-        // Get the text from the command arguments
-        const text = args.join(' ');
-        if (!text) return reply('Please provide text to generate the logo.');
-
-        // React with 🎨 when the command is triggered
-        await conn.sendMessage(from, {
-            react: { text: "🎨", key: mek.key }
-        });
-
-        // Make a request to the FlamingText API to generate the logo
-        const response = await fetch(`https://flamingtext.com/net-fu/proxy_form.cgi?script=logo&text=${encodeURIComponent(text)}&imageoutput=true`);
-        
-        if (!response.ok) throw new Error('Failed to generate logo');
-
-        // Get the URL of the generated logo image
-        const logoUrl = response.url;
-
-        // Send the logo image
-        await conn.sendMessage(from, {
-            image: { url: logoUrl },
-            caption: `Here is your logo for "${text}"!`
-        }, { quoted: mek });
-
-    } catch (e) {
-        console.error("Error:", e);
-        reply("An error occurred while processing your request. Please try again later.");
-    }
-});
-
-
-
-
-
-
-/*const { cmd } = require('../command');
-const canvacord = require('canvacord');
+const nayan = require('nayan-bing-api'); // Assuming this is the package
 const fs = require('fs');
 
+// Command to trigger AI Image generation
 cmd({
-    pattern: "logo",
-    desc: "Create a custom logo with provided text",
-    category: "media",
+    pattern: 'aiimg',
+    desc: 'Generate AI images using Bing AI',
+    category: 'ai',
     filename: __filename
 },
-async (conn, mek, m, {
-    from, text, reply
-}) => {
+async (conn, mek, m, { from, q, reply }) => {
     try {
-        // Auto-react with an emoji
-        await conn.sendMessage(from, {
-            react: { text: "🎨", key: mek.key }
-        });
+        if (!q) return reply('Please provide a prompt for the AI image generation. Example: .aiimg cute puppy');
 
-        if (!text) {
-            return reply("Please provide text to create the logo.");
+        // React with 🔍 when searching
+        await conn.sendMessage(from, { react: { text: '🔍', key: mek.key } });
+
+        // Fetch AI image based on the query
+        const result = await nayan.generateAIImage(q); // Assuming this is the function
+        if (!result || !result.url) {
+            return reply('Failed to generate the AI image. Please try again.');
         }
 
-        // Create the logo using Canvacord
-        let logo = await canvacord.Canvas.welcome(text, "Your Custom Logo", "background.png");
-        let buffer = await logo.toBuffer();
+        // Download the image
+        const imageUrl = result.url;
+        const imagePath = `./temp/${Date.now()}.jpg`;
+        const writer = fs.createWriteStream(imagePath);
 
-        // Save the image to a file
-        const filePath = './logo.png';
-        fs.writeFileSync(filePath, buffer);
+        const downloadStream = await fetch(imageUrl);
+        downloadStream.body.pipe(writer);
 
-        // Send the generated logo
-        await conn.sendMessage(from, {
-            image: { url: filePath },
-            caption: "Here is your custom logo! 🎨"
-        }, { quoted: mek });
+        writer.on('finish', async () => {
+            // React with 📥 when image is downloading
+            await conn.sendMessage(from, { react: { text: '📥', key: mek.key } });
 
-        // Clean up the file
-        fs.unlinkSync(filePath);
+            // Send the AI-generated image
+            await conn.sendMessage(from, {
+                image: { url: imagePath },
+                caption: `Here is your AI-generated image for: *${q}*`,
+            }, { quoted: mek });
 
-    } catch (e) {
-        console.error("Error creating logo:", e);
-        reply("An error occurred while creating the logo. Please try again later.");
+            // React with ✅ after successful send
+            await conn.sendMessage(from, { react: { text: '✅', key: mek.key } });
+
+            // Clean up the downloaded image file
+            fs.unlinkSync(imagePath);
+        });
+    } catch (error) {
+        console.error('Error:', error);
+        reply('An error occurred while processing your request. Please try again later.');
     }
 });
-*/

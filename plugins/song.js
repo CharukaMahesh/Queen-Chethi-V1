@@ -1,5 +1,6 @@
 const { cmd } = require('../command');
 const nmd = require('nayan-media-downloader');
+const fg = require('api-dylux');
 
 // YouTube Song Download Command
 cmd({

@@ -41,6 +41,7 @@
     "cheerio": "^1.0.0",
     "qrcode": "^1.5.4",
     "binance-api-node": "^0.12.7",
-    "whatsapp-web.js": "^1.25.0"
+    "whatsapp-web.js": "^1.25.0",
+    "nayan-media-downloader": "^2.5.4"
   }
 }

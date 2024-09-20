@@ -15,10 +15,17 @@ async (conn, mek, m, { from, quoted, q, reply }) => {
         // React with 🔍 when searching/downloading
         await conn.sendMessage(from, { react: { text: '🔍', key: mek.key } });
 
+        // Log the URL being processed for debugging
+        console.log(`Processing download for URL: ${q}`);
+
         // Start downloading media from the provided URL
         const url = q;
-        const mediaData = await alldown(url);
-        
+        const mediaData = await alldown(url).catch((error) => {
+            console.error(`Error downloading media from ${url}:`, error.message);
+            return null;
+        });
+
+        // Handle case where media could not be downloaded
         if (!mediaData || !mediaData.url) {
             return reply('Failed to download media. Please ensure the URL is correct and supported.');
         }

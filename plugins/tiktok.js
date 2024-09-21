@@ -16,10 +16,14 @@ async (conn, mek, m, { from, quoted, q, reply }) => {
         await conn.sendMessage(from, { react: { text: "🎥", key: mek.key } });
 
         const url = q;
+        
+        // Attempt to download the video
         const videoData = await alldown(url);
+        console.log('Video Data:', videoData); // Log the full API response
 
+        // Check if the download link exists
         if (!videoData || !videoData.dl_link) {
-            return reply("Failed to download the TikTok video. Please try again later.");
+            return reply("Failed to download the TikTok video. Please ensure the URL is correct and supported.");
         }
 
         // Send TikTok Video

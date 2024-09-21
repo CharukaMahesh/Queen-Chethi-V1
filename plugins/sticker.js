@@ -1,69 +1,33 @@
 const { cmd } = require('../command');
-const { Sticker, StickerTypes } = require('wa-sticker-formatter');
-const axios = require('axios');
-const fs = require('fs');
-const path = require('path');
+const { createSticker } = require('sticker-maker-wa');
 
 cmd({
     pattern: "sticker",
-    desc: "Convert image to sticker",
-    category: "tools",
+    desc: "Convert an image to a sticker",
+    category: "media",
     filename: __filename
 },
 async (conn, mek, m, { from, quoted, reply }) => {
     try {
-        // React with 🚀 when the command is triggered
-        await conn.sendMessage(from, {
-            react: { text: "🚀", key: mek.key }
-        });
+        if (!quoted || !quoted.image) return reply("Please send an image to convert to a sticker.");
 
-        // Ensure the message is replying to an image
-        if (!quoted || !quoted.message.imageMessage) {
-            return reply("Please reply to an image to convert it to a sticker.");
-        }
+        // React with 📸 when the command is triggered
+        await conn.sendMessage(from, { react: { text: "📸", key: mek.key } });
 
-        // Get media key and media URL
-        const mediaKey = quoted.message.imageMessage.mediaKey;
-        const mediaUrl = await conn.downloadAndSaveMediaMessage(quoted, 'temp_image.jpg');
+        // Get the image buffer from the quoted message
+        const media = await conn.downloadMediaMessage(quoted);
+        
+        // Create sticker
+        const stickerBuffer = await createSticker(media, { pack: 'Your Pack Name', author: 'Your Name' });
 
-        if (!mediaUrl) {
-            return reply("Failed to download the image. Please try again.");
-        }
+        // Send the sticker
+        await conn.sendMessage(from, { sticker: stickerBuffer }, { quoted: mek });
 
-        // Create a sticker from the image
-        const sticker = new Sticker(mediaUrl, {
-            pack: 'Queen Chethi', // Sticker pack name
-            author: 'Your Bot', // Sticker author name
-            type: StickerTypes.FULL, // Sticker type (FULL, CROPPED, CIRCLE)
-            categories: ['🤖', '🎉'], // Sticker emoji categories
-            id: '12345', // Unique ID for the sticker
-            quality: 70, // Quality of the sticker
-        });
-
-        // Convert to buffer and send sticker
-        const stickerBuffer = await sticker.toBuffer();
-        if (stickerBuffer) {
-            await conn.sendMessage(from, { sticker: stickerBuffer }, { quoted: mek });
-
-            // React with 📡 when the sticker is successfully sent
-            await conn.sendMessage(from, {
-                react: { text: "📡", key: mek.key }
-            });
-        } else {
-            return reply("Failed to create sticker. Please try again.");
-        }
-
-        // Clean up the temporary file
-        fs.unlinkSync('temp_image.jpg');
+        // React with ✅ after sending
+        await conn.sendMessage(from, { react: { text: "✅", key: mek.key } });
 
     } catch (e) {
         console.error("Error:", e);
-
-        // React with 😞 in case of an error
-        await conn.sendMessage(from, {
-            react: { text: "😞", key: mek.key }
-        });
-
-        reply(`An error occurred while processing your request: ${e.message}`);
+        reply("An error occurred while creating the sticker. Please try again later.");
     }
 });

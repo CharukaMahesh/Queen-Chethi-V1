@@ -1,7 +1,6 @@
-const { alldown } = require("nayan-media-downloader");
-const { cmd } = require('../command');
+const axios = require('axios');
+const cheerio = require('cheerio');
 
-// TikTok Download Command
 cmd({
     pattern: "tiktok",
     desc: "Download TikTok videos",
@@ -14,19 +13,19 @@ async (conn, mek, m, { from, quoted, q, reply }) => {
 
         await conn.sendMessage(from, { react: { text: "🎥", key: mek.key } });
 
-        // Download the video
-        const data = await alldown(q);
-        if (!data || !data.dl_url) {
-            return reply("Failed to download the TikTok video. Please ensure the URL is correct and supported.");
-        }
+        const response = await axios.post('https://tikdown.org/en', new URLSearchParams({ url: q }));
+        const $ = cheerio.load(response.data);
+        
+        const videoUrl = $('#download a').attr('href'); // Adjust selector based on the page structure
+
+        if (!videoUrl) return reply("Failed to retrieve video. Please try again later.");
 
         await conn.sendMessage(from, { react: { text: "📥", key: mek.key } });
 
-        // Send the video
         await conn.sendMessage(from, {
-            video: { url: data.dl_url },
+            video: { url: videoUrl },
             mimetype: 'video/mp4',
-            caption: `TikTok Video`
+            caption: "Here's your TikTok video!"
         }, { quoted: mek });
 
         await conn.sendMessage(from, { react: { text: "✅", key: mek.key } });

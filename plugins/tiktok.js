@@ -1,7 +1,7 @@
+const { alldown } = require("nayan-media-downloader");
 const { cmd } = require('../command');
-const { alldown } = require('nayan-media-downloader');
 
-// 🎵 TikTok Media Download Command
+// TikTok Download Command
 cmd({
     pattern: "tiktok",
     desc: "Download TikTok videos",
@@ -10,34 +10,35 @@ cmd({
 },
 async (conn, mek, m, { from, quoted, q, reply }) => {
     try {
-        if (!q) return reply("Please provide a valid TikTok URL... 🙋‍♂️");
+        if (!q) return reply("Please provide a valid TikTok URL.");
 
-        // React with 🎵 when the command is triggered
-        await conn.sendMessage(from, { react: { text: "🎵", key: mek.key } });
+        // React with 🎥 when the command is triggered
+        await conn.sendMessage(from, { react: { text: "🎥", key: mek.key } });
 
-        const url = q;
-
-        // Attempt to download the media
-        const mediaData = await alldown(url);
-        console.log('Media Data:', mediaData); // Log the full API response
-
-        // Check if the download link exists
-        if (!mediaData || !mediaData.dl_link) {
+        // Try downloading the video
+        const data = await alldown(q);
+        if (!data || !data.dl_url) {
             return reply("Failed to download the TikTok video. Please ensure the URL is correct and supported.");
         }
 
-        // Send TikTok Video
+        const downloadUrl = data.dl_url;
+
+        // React with 📥 when download starts
+        await conn.sendMessage(from, { react: { text: "📥", key: mek.key } });
+
+        // Send the video
         await conn.sendMessage(from, {
-            video: { url: mediaData.dl_link },
-            mimetype: "video/mp4",
-            caption: "Here is your TikTok video!"
+            video: { url: downloadUrl },
+            mimetype: 'video/mp4',
+            caption: `${data.title || 'TikTok Video'}`
         }, { quoted: mek });
 
-        // React with ✅ after the video is sent
+        // React with ✅ when the upload is complete
         await conn.sendMessage(from, { react: { text: "✅", key: mek.key } });
 
     } catch (e) {
         console.error("Error:", e);
         reply("An error occurred while downloading the TikTok video. Please try again later.");
+        await conn.sendMessage(from, { react: { text: "😞", key: mek.key } });
     }
 });

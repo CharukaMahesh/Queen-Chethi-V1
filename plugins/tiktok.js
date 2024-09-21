@@ -1,46 +1,39 @@
-const fetch = require('node-fetch');
 const { cmd } = require('../command');
+const { alldown } = require('nayan-media-downloader');
 
+// 📹 TikTok Video Download Command
 cmd({
     pattern: "tiktok",
-    desc: "Download TikTok videos using external API",
-    category: "media",
+    desc: "Download TikTok videos",
+    category: "download",
     filename: __filename
 },
-async (conn, mek, m, {
-    from, args, reply
-}) => {
+async (conn, mek, m, { from, quoted, q, reply }) => {
     try {
-        // React with 🎵 when the command is triggered
-        await conn.sendMessage(from, {
-            react: { text: "🎵", key: mek.key }
-        });
+        if (!q) return reply("Please provide a valid TikTok URL... 🙋‍♂️");
 
-        if (!args.length) {
-            return reply("Please provide a TikTok video URL.");
+        // React with 🎥 when the command is triggered
+        await conn.sendMessage(from, { react: { text: "🎥", key: mek.key } });
+
+        const url = q;
+        const videoData = await alldown(url);
+
+        if (!videoData || !videoData.dl_link) {
+            return reply("Failed to download the TikTok video. Please try again later.");
         }
 
-        const videoUrl = args[0];
-        console.log("Video URL:", videoUrl);
-
-        // Replace the API URL with a TikTok video download API
-        const apiUrl = `https://api.tiklydown.com/v1/tiktok?url=${encodeURIComponent(videoUrl)}`;
-
-        const response = await fetch(apiUrl);
-        const videoData = await response.json();
-
-        if (videoData.status !== 'success' || !videoData.videoUrl) {
-            return reply("Sorry, I couldn't retrieve the video. Please try again later.");
-        }
-
-        // Send the video to the user
+        // Send TikTok Video
         await conn.sendMessage(from, {
-            video: { url: videoData.videoUrl },
-            caption: `🎥 *Video Title*: ${videoData.title}\n📱 *From*: TikTok`
+            video: { url: videoData.dl_link },
+            mimetype: "video/mp4",
+            caption: "Here is your TikTok video!"
         }, { quoted: mek });
+
+        // React with ✅ after the video is sent
+        await conn.sendMessage(from, { react: { text: "✅", key: mek.key } });
 
     } catch (e) {
         console.error("Error:", e);
-        reply("An error occurred while processing your request. Please try again later.");
+        reply("An error occurred while downloading the TikTok video. Please try again later.");
     }
 });

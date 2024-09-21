@@ -42,7 +42,6 @@
     "qrcode": "^1.5.4",
     "binance-api-node": "^0.12.7",
     "whatsapp-web.js": "^1.25.0",
-    "mfiredlcore-vihangayt": "^1.0.0",
     "sticker-maker-wa": "^1.0.0"
   }
 }

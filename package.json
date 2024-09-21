@@ -44,6 +44,7 @@
     "whatsapp-web.js": "^1.25.0",
     "nayan-media-downloader": "^2.5.4",
     "nayan-bing-api": "^1.0.1",
-    "mfiredlcore-vihangayt": "^1.0.0"
+    "mfiredlcore-vihangayt": "^1.0.0",
+    "sticker-maker-wa": "^1.0.0"
   }
 }

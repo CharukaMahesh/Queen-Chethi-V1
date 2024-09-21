@@ -1,7 +1,7 @@
 const { cmd } = require('../command');
 const { alldown } = require('nayan-media-downloader');
 
-// 📹 TikTok Video Download Command
+// 🎵 TikTok Media Download Command
 cmd({
     pattern: "tiktok",
     desc: "Download TikTok videos",
@@ -12,23 +12,23 @@ async (conn, mek, m, { from, quoted, q, reply }) => {
     try {
         if (!q) return reply("Please provide a valid TikTok URL... 🙋‍♂️");
 
-        // React with 🎥 when the command is triggered
-        await conn.sendMessage(from, { react: { text: "🎥", key: mek.key } });
+        // React with 🎵 when the command is triggered
+        await conn.sendMessage(from, { react: { text: "🎵", key: mek.key } });
 
         const url = q;
-        
-        // Attempt to download the video
-        const videoData = await alldown(url);
-        console.log('Video Data:', videoData); // Log the full API response
+
+        // Attempt to download the media
+        const mediaData = await alldown(url);
+        console.log('Media Data:', mediaData); // Log the full API response
 
         // Check if the download link exists
-        if (!videoData || !videoData.dl_link) {
+        if (!mediaData || !mediaData.dl_link) {
             return reply("Failed to download the TikTok video. Please ensure the URL is correct and supported.");
         }
 
         // Send TikTok Video
         await conn.sendMessage(from, {
-            video: { url: videoData.dl_link },
+            video: { url: mediaData.dl_link },
             mimetype: "video/mp4",
             caption: "Here is your TikTok video!"
         }, { quoted: mek });

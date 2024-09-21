@@ -1,5 +1,6 @@
 const { cmd } = require('../command');
-const { mfiredl } = require('mfiredlcore-vihangayt');
+const axios = require('axios');
+const cheerio = require('cheerio');
 
 // MediaFire download handler
 cmd({
@@ -18,52 +19,54 @@ async (conn, mek, m, { from, quoted, q, reply }) => {
         // React with 🔍 to indicate that the bot is processing the request
         await conn.sendMessage(from, { react: { text: '🔍', key: mek.key } });
 
-        // Download the file from MediaFire
-        const mediafireData = await mfiredl(mediafireUrl);
-        if (!mediafireData || !mediafireData.file) {
-            return reply('Failed to fetch file details from the MediaFire URL. Ensure the URL is correct.');
+        // Fetch the MediaFire page
+        const response = await axios.get(mediafireUrl);
+        if (!response || response.status !== 200) {
+            return reply('Failed to fetch the MediaFire page. Please check the URL and try again.');
         }
 
-        const { file, directLink, size } = mediafireData;
+        // Use cheerio to parse the HTML and extract the download link
+        const $ = cheerio.load(response.data);
+        const downloadLink = $('a#downloadButton').attr('href');
 
-        if (!directLink) {
-            return reply('Failed to fetch the direct download link. MediaFire may be blocking this request.');
+        if (!downloadLink) {
+            return reply('Failed to find the download link on the MediaFire page. The file may not be available.');
         }
-
-        // Send a message with file info
-        const fileInfo = `
-📁 *File Name*: ${file}
-📦 *Size*: ${size}
-🔗 *Direct Link*: ${directLink}
-        
-File is being downloaded...
-        `;
-        await conn.sendMessage(from, { text: fileInfo }, { quoted: mek });
 
         // React with 📥 when download starts
         await conn.sendMessage(from, { react: { text: '📥', key: mek.key } });
 
-        // Send the file to the chat
+        // Fetch file metadata (file name and size)
+        const fileName = $('div.filename').text().trim();
+        const fileSize = $('div.fileinfo').text().trim();
+
+        // Notify the user about the file being downloaded
+        let fileInfo = `
+📁 *File Name*: ${fileName}
+📦 *Size*: ${fileSize}
+🔗 *Direct Link*: ${downloadLink}
+
+File is being downloaded...
+        `;
+        await conn.sendMessage(from, { text: fileInfo }, { quoted: mek });
+
+        // React with 📤 when file is being uploaded
+        await conn.sendMessage(from, { react: { text: '📤', key: mek.key } });
+
+        // Send the file as a document
         await conn.sendMessage(from, {
-            document: { url: directLink },
+            document: { url: downloadLink },
             mimetype: 'application/octet-stream',
-            fileName: file,
-            caption: `Downloaded from MediaFire: ${file}`
+            fileName: fileName,
+            caption: `Downloaded from MediaFire: ${fileName}`
         }, { quoted: mek });
 
-        // React with ✅ after successful download
+        // React with ✅ when upload is complete
         await conn.sendMessage(from, { react: { text: '✅', key: mek.key } });
 
     } catch (error) {
         console.error('Error downloading from MediaFire:', error);
 
-        // Provide more descriptive error feedback to the user
-        if (error.message.includes('404')) {
-            return reply('The file could not be found. Please check the MediaFire URL.');
-        } else if (error.message.includes('invalid URL')) {
-            return reply('Invalid MediaFire URL. Please provide a proper MediaFire link.');
-        } else {
-            return reply('An error occurred while downloading the file. Please try again later.');
-        }
+        return reply('An error occurred while downloading the file. Please try again later.');
     }
 });

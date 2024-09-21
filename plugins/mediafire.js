@@ -1,5 +1,5 @@
 const { cmd } = require('../command');
-const mfiredl = require('mfiredlcore-vihangayt');
+const { mfiredl } = require('mfiredlcore-vihangayt');
 
 // MediaFire download handler
 cmd({
